@@ -67,6 +67,7 @@ extern "C" {
     void sensor1SendSensorValToSensorQ(unsigned char sensorValue);
     
     unsigned char sensor1ReceiveVal();
+    int receiveFromRover(unsigned char data);
     /* Provide C++ Compatibility */
 #ifdef __cplusplus
 }

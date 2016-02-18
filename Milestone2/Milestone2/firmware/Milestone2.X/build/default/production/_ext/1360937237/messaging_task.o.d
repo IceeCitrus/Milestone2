@@ -185,7 +185,4 @@ build/default/production/_ext/1360937237/messaging_task.o:  \
  ../src/debugging_task_public.h  \
 ../src/debugging_task.h  \
  ../src/messaging_task.h  \
-../src/sensor2.h  \
-../src/sensor3.h  \
- ../src/sensor4.h  \
 ../src/messaging_task_public.h 

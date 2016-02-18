@@ -11,7 +11,7 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-    void sendMsgToWIFLY(unsigned char message[]);
+    void sendMsgToWIFLY(unsigned char message[], int num);
     void sendByteToWIFLY(unsigned char byte);
     void ReceiveUSARTMsgFromMsgQ(unsigned char usartMsg);
 

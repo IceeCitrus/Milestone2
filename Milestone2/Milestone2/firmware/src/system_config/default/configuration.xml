@@ -145,17 +145,18 @@
     </Files>
     <Templates>
       <Template>
-        <Name>sensor2.c</Name>
-        <Path>Source Files/app</Path>
-      </Template>
-      <Template>
-        <Name>sensor3.c</Name>
-        <Path>Source Files/app</Path>
-      </Template>
-      <Template>
         <Name>sys_ports_static.c</Name>
         <Path>Source Files/app/system_config/default/framework/system/ports/src</Path>
         <Checksum>EA425DBB02818CEF28D6D454B7F2C73B</Checksum>
+      </Template>
+      <Template>
+        <Name>system_init.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>B9DE729176ADB7AEDBA2E9858C850341</Checksum>
+      </Template>
+      <Template>
+        <Name>main.c</Name>
+        <Path>Source Files/app</Path>
       </Template>
       <Template>
         <Name>system_interrupt_a.S</Name>
@@ -163,8 +164,14 @@
         <Checksum>2AADE7885E66E00DBB7FE911439FFA49</Checksum>
       </Template>
       <Template>
-        <Name>sensor4.c</Name>
-        <Path>Source Files/app</Path>
+        <Name>system_definitions.h</Name>
+        <Path>Header Files/app/system_config/default</Path>
+        <Checksum>AABF0C035184242E5F2BE55CBEFD59BA</Checksum>
+      </Template>
+      <Template>
+        <Name>system_exceptions.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>C111969CA43D6CEA1E9E33A6164E7AE0</Checksum>
       </Template>
       <Template>
         <Name>drv_adc_static.h</Name>
@@ -175,58 +182,6 @@
         <Name>drv_adc_static.c</Name>
         <Path>Source Files/app/system_config/default/framework/driver/adc/src</Path>
         <Checksum>6E4F0276AD392C60487405B36BE5C303</Checksum>
-      </Template>
-      <Template>
-        <Name>drv_usart_static.c</Name>
-        <Path>Source Files/app/system_config/default/framework/driver/usart</Path>
-        <Checksum>E99F83B1AF2B9157413E2D6BC8969741</Checksum>
-      </Template>
-      <Template>
-        <Name>debugging_task.h</Name>
-        <Path>Header Files/app</Path>
-      </Template>
-      <Template>
-        <Name>debugging_task.c</Name>
-        <Path>Source Files/app</Path>
-      </Template>
-      <Template>
-        <Name>FreeRTOSConfig.h</Name>
-        <Path>Header Files/app/system_config/default</Path>
-        <Checksum>8A13F8C1D1B81346AD5B7407DB74B3DF</Checksum>
-      </Template>
-      <Template>
-        <Name>sys_clk_static.h</Name>
-        <Path>Header Files/app/system_config/default/framework/system/clk</Path>
-        <Checksum>999179DADE9ECD59953526F5E9F83ACC</Checksum>
-      </Template>
-      <Template>
-        <Name>system_interrupt.c</Name>
-        <Path>Source Files/app/system_config/default</Path>
-        <Checksum>914B763249E6C60815973883564D7EF0</Checksum>
-      </Template>
-      <Template>
-        <Name>sys_clk_static.c</Name>
-        <Path>Source Files/app/system_config/default/framework/system/clk/src</Path>
-        <Checksum>1B968DA82B5DD869A6119C3B7628D753</Checksum>
-      </Template>
-      <Template>
-        <Name>system_init.c</Name>
-        <Path>Source Files/app/system_config/default</Path>
-        <Checksum>CE73B318F03F9C4EEE72EFE1D22EBBCF</Checksum>
-      </Template>
-      <Template>
-        <Name>main.c</Name>
-        <Path>Source Files/app</Path>
-      </Template>
-      <Template>
-        <Name>system_definitions.h</Name>
-        <Path>Header Files/app/system_config/default</Path>
-        <Checksum>92F4509BF84C25AAFFBFE6B206796265</Checksum>
-      </Template>
-      <Template>
-        <Name>system_exceptions.c</Name>
-        <Path>Source Files/app/system_config/default</Path>
-        <Checksum>C111969CA43D6CEA1E9E33A6164E7AE0</Checksum>
       </Template>
       <Template>
         <Name>app.c</Name>
@@ -241,18 +196,32 @@
         <Path>Header Files/app</Path>
       </Template>
       <Template>
+        <Name>drv_usart_static.c</Name>
+        <Path>Source Files/app/system_config/default/framework/driver/usart</Path>
+        <Checksum>E99F83B1AF2B9157413E2D6BC8969741</Checksum>
+      </Template>
+      <Template>
+        <Name>debugging_task.h</Name>
+        <Path>Header Files/app</Path>
+      </Template>
+      <Template>
         <Name>drv_usart_static.h</Name>
         <Path>Header Files/app/system_config/default/framework/driver/usart</Path>
         <Checksum>66C127084540B78CD4F78E2FBCC6D29F</Checksum>
       </Template>
       <Template>
-        <Name>system_tasks.c</Name>
-        <Path>Source Files/app/system_config/default</Path>
-        <Checksum>3B9574B8219F750F19658DA731E330BA</Checksum>
+        <Name>debugging_task.c</Name>
+        <Path>Source Files/app</Path>
       </Template>
       <Template>
-        <Name>sensor3.h</Name>
-        <Path>Header Files/app</Path>
+        <Name>FreeRTOSConfig.h</Name>
+        <Path>Header Files/app/system_config/default</Path>
+        <Checksum>8A13F8C1D1B81346AD5B7407DB74B3DF</Checksum>
+      </Template>
+      <Template>
+        <Name>system_tasks.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>2806B6C3FAA0EB2B1C61C11B85597676</Checksum>
       </Template>
       <Template>
         <Name>system_config.h</Name>
@@ -264,8 +233,14 @@
         <Path>Header Files/app</Path>
       </Template>
       <Template>
-        <Name>sensor4.h</Name>
-        <Path>Header Files/app</Path>
+        <Name>sys_clk_static.h</Name>
+        <Path>Header Files/app/system_config/default/framework/system/clk</Path>
+        <Checksum>999179DADE9ECD59953526F5E9F83ACC</Checksum>
+      </Template>
+      <Template>
+        <Name>system_interrupt.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>E29E80DFCB915CF93B13F5E6E6D116B3</Checksum>
       </Template>
       <Template>
         <Name>rtos_hooks.c</Name>
@@ -273,8 +248,9 @@
         <Checksum>FA52743264536E5207D2ADBE57B48D05</Checksum>
       </Template>
       <Template>
-        <Name>sensor2.h</Name>
-        <Path>Header Files/app</Path>
+        <Name>sys_clk_static.c</Name>
+        <Path>Source Files/app/system_config/default/framework/system/clk/src</Path>
+        <Checksum>1B968DA82B5DD869A6119C3B7628D753</Checksum>
       </Template>
     </Templates>
     <CompilerItems>

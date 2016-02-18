@@ -185,7 +185,4 @@ build/default/debug/_ext/1688732426/system_tasks.o:  \
  ../../../../../../../../../microchip/harmony/v1_06_02/third_party/rtos/FreeRTOS/Source/include/task.h  \
  ../src/debugging_task_public.h  \
 ../src/debugging_task.h  \
- ../src/messaging_task.h  \
-../src/sensor2.h  \
-../src/sensor3.h  \
- ../src/sensor4.h 
+ ../src/messaging_task.h 

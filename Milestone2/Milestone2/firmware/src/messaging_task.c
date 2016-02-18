@@ -93,10 +93,10 @@ MESSAGE_FORMAT msg_Format;
 // Section: Application Local Functions
 // *****************************************************************************
 // *****************************************************************************
-void sendMsgToWIFLY(unsigned char message[])
+void sendMsgToWIFLY(unsigned char message[], int num)
 {
     int i;
-    for(i = 0; i < sizeof(message)/sizeof(unsigned char); i++)
+    for(i = 0; i < num; i++)
     {
         sendByteToWIFLY(message[i]);
     }
@@ -206,19 +206,19 @@ void MESSAGING_TASK_Tasks ( void )
         {
             //stopEverything();
 #ifdef MACRO_DEBUG
-      debugChar(0x07);      
+      debugChar(start_message_task);      
 #endif
             unsigned char temp;
             xQueueReceive(msg_taskData.receiveMsg_q, &temp, portMAX_DELAY);
 #ifdef MACRO_DEBUG
-      debugBuffer(0x08);      
+      debugBuffer(after_recv_msgq);      
 #endif
       
             if((temp == 0x81) && (msg_Format.count == 0))
             {
 //                sendByteToWIFLY(temp);
 #ifdef MACRO_DEBUG
-                debugChar(0xD1);
+                debugChar(header_good);
 #endif
                 //sendByteToWIFLY(msg_Format.header);
                 msg_Format.validHeader = 5;
@@ -230,7 +230,7 @@ void MESSAGING_TASK_Tasks ( void )
                 //Invalid Message
 //                sendByteToWIFLY(temp);
 #ifdef MACRO_DEBUG
-                debugChar(0xF3);
+                debugChar(header_bad);
 #endif
                 msg_Format.numInvalid++;
                 //sendMsgToWIFLY("NO\t");
@@ -243,61 +243,61 @@ void MESSAGING_TASK_Tasks ( void )
             if((msg_Format.validHeader == 5) && (msg_Format.count != 0))
             {
 #ifdef MACRO_DEBUG
-                debugChar(0xEE);
+                debugChar(msg_body);
 #endif
 //                sendByteToWIFLY(temp);
                 if(msg_Format.count == 2){
 #ifdef MACRO_DEBUG
-                    debugChar(0xD2);
+                    debugChar(msg_dst);
 #endif
 //                    sendByteToWIFLY(temp);
                     msg_Format.dst = temp;
                 }
                 else if(msg_Format.count == 3) {
 #ifdef MACRO_DEBUG
-                    debugChar(0xD3);
+                    debugChar(msg_type);
 #endif
 //                    sendByteToWIFLY(temp);
                     msg_Format.type = temp;
                 }
                 else if(msg_Format.count == 4) {
 #ifdef MACRO_DEBUG
-                    debugChar(0xD4);
+                    debugChar(msg_msgNum1);
 #endif
 //                    sendByteToWIFLY(temp);
                     msg_Format.msgNum1 = temp;
                 }
                 else if(msg_Format.count == 5) {
 #ifdef MACRO_DEBUG
-                    debugChar(0xD5);
+                    debugChar(msg_msgNum2);
 #endif
 //                    sendByteToWIFLY(temp);
                     msg_Format.msgNum2 = temp;
                 }
                 else if(msg_Format.count == 6) {
 #ifdef MACRO_DEBUG
-                    debugChar(0xD6);
+                    debugChar(msg_data1);
 #endif
 //                    sendByteToWIFLY(temp);
                     msg_Format.data1 = temp;
                 }
                 else if(msg_Format.count == 7) {
 #ifdef MACRO_DEBUG
-                    debugChar(0xD7);
+                    debugChar(msg_data2);
 #endif
 //                    sendByteToWIFLY(temp);
                     msg_Format.data2 = temp;
                 }
                 else if(msg_Format.count == 8) {
 #ifdef MACRO_DEBUG
-                    debugChar(0xD8);
+                    debugChar(msg_data3);
 #endif
 //                    sendByteToWIFLY(temp);
                     msg_Format.data3 = temp;
                 }
                 else if(msg_Format.count == 9) {
 #ifdef MACRO_DEBUG
-                    debugChar(0xD9);
+                    debugChar(msg_data4);
 #endif
 //                    sendByteToWIFLY(temp);
                     msg_Format.data4 = temp;
@@ -308,7 +308,7 @@ void MESSAGING_TASK_Tasks ( void )
             if((msg_Format.validHeader == 5)&&(temp == 0x88)&&(msg_Format.count == 11))
             {
 #ifdef MACRO_DEBUG
-                debugChar(0xE0);
+                debugChar(footer_good);
 #endif
 //                sendByteToWIFLY(temp);
                 msg_Format.footer = temp;
@@ -318,7 +318,7 @@ void MESSAGING_TASK_Tasks ( void )
             else if((msg_Format.count == 11) && (msg_Format.validHeader == 5) && (temp != 0x88))
             {
 #ifdef MACRO_DEBUG
-                debugChar(0xF1);
+                debugChar(footer_bad);
 #endif
                 //sendByteToWIFLY(0xF1);
                 msg_Format.numInvalid++;              
@@ -361,7 +361,6 @@ void MESSAGING_TASK_Tasks ( void )
             debugChar(msg_Format.data3);
             debugChar(msg_Format.data4);
             debugChar(msg_Format.footer);
-#endif
             sendByteToWIFLY(msg_Format.header);
             sendByteToWIFLY(msg_Format.dst);
             sendByteToWIFLY(msg_Format.type);
@@ -372,6 +371,7 @@ void MESSAGING_TASK_Tasks ( void )
             sendByteToWIFLY(msg_Format.data3);
             sendByteToWIFLY(msg_Format.data4);
             sendByteToWIFLY(msg_Format.footer);
+#endif
             msg_Format.count = 0;
             msg_Format.validHeader = 0;
             msg_Format.validFooter = 0;

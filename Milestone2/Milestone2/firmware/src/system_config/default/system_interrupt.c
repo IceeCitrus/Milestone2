@@ -65,9 +65,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include "debugging_task.h"
 #include "messaging_task.h"
-#include "sensor2.h"
-#include "sensor3.h"
-#include "sensor4.h"
 #include "system_definitions.h"
 
 // *****************************************************************************
@@ -81,26 +78,22 @@ void IntHandlerDrvAdc(void)
     unsigned char sensorRead;
     unsigned char temp;
 
-#ifdef MACRO_DEBUG
-debugCharFromISR(0x05);
-#endif
+//debugCharFromISR(start_ADC_ISR);
+
     //Check to see if samples are available
     if (DRV_ADC_SamplesAvailable()) {   
 
         //Read from the sensor
         sensorRead = DRV_ADC_SamplesRead(0);      
         temp = sensorRead/25.6;
-        debugCharFromISR(temp);
+        //debugCharFromISR(0xEE);
+        //debugCharFromISR(temp);
         //Send the data to the Sensor Queue
         sensor1SendSensorValToSensorQ(temp);
-        sensor2SendSensorValToSensorQ(0x0A);
-        sensor3SendSensorValToSensorQ(0x0B);
-        sensor4SendSensorValToSensorQ(0x0C);
     }
     /* Clear ADC Interrupt Flag */
-#ifdef MACRO_DEBUG
-debugCharFromISR(0x06);  
-#endif
+
+//debugCharFromISR(end_ADC_ISR);  
 //stopEverything();
     //PLIB_ADC_SampleAutoStartDisable(DRV_ADC_ID_1);
     DRV_ADC_Stop();
@@ -119,7 +112,9 @@ void IntHandlerDrvUsartInstance0(void)
     {
         unsigned char data = 0x00;
         data = messageQ();
+debugCharFromISR(before_transmitting_USART);
         PLIB_USART_TransmitterByteSend(USART_ID_1, data);
+debugCharFromISR(after_transmitting_USART);
     }    
     else//(PLIB_USART_ReceiverDataIsAvailable(USART_ID_1));
     {
@@ -129,9 +124,11 @@ void IntHandlerDrvUsartInstance0(void)
     {
         //stopEverything();
         unsigned char byte = 0x00; 
+        debugCharFromISR(before_recv_USART);
         byte= PLIB_USART_ReceiverByteReceive(USART_ID_1);
 //        sendByteToWIFLY(byte);
         ReceiveUSARTMsgFromMsgQ(byte);
+        debugCharFromISR(after_recv_USART);
 //        PLIB_USART_TransmitterByteSend(USART_ID_1, byte);
         //unsigned char byte = 0x00; 
         //byte= PLIB_USART_ReceiverByteReceive(USART_ID_1);

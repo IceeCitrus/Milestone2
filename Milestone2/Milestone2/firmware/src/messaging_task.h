@@ -77,7 +77,7 @@ unsigned char messageQ();
   Returns:
     None.
 
-  Example:
+  Example:      
  None.
 
   Remarks:

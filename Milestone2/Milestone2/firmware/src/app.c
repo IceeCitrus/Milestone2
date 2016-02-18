@@ -112,13 +112,13 @@ int sensor1SendTimerValToMsgQ(unsigned int millisecondsElapsed)
 void sensor1SendSensorValToSensorQ(unsigned char sensorValue)
 {
 #ifdef MACRO_DEBUG
-    debugChar(0x01);
+    debugChar(before_pushing_to_queue);
 #endif 
     //debugChar(sensorValue);
     xQueueSendFromISR( appData.sensor1_q, &sensorValue,
                                    NULL );
 #ifdef MACRO_DEBUG
-    debugChar(0x02);
+    debugChar(after_pushing_to_queue);
 #endif
 }
 
@@ -137,34 +137,6 @@ unsigned char sensor1ReceiveVal()
     return sensorRead;
 }
 
-void receiveMsgFormat(unsigned char buffer[])
-{
-    int i;
-    for(i = 0; i < 10; i++)
-    {
-        if(i == 0)
-            msgFormat.header = buffer[i];
-        else if(i==1)
-            msgFormat.dst = buffer[i];
-        else if(i==2)
-            msgFormat.type = buffer[i];
-        else if(i==3)
-            msgFormat.msgNum1 = buffer[i];
-        else if(i==4)
-            msgFormat.msgNum2 = buffer[i];
-        else if(i==5)
-            msgFormat.data1 = buffer[i];
-        else if(i==6)
-            msgFormat.data2 = buffer[i];
-        else if(i==7)
-            msgFormat.data3 = buffer[i];
-        else if(i==8)
-            msgFormat.data4 = buffer[i];
-        else if(i==9)
-            msgFormat.footer = buffer[i];
-        else{}
-    }
-}
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -178,7 +150,6 @@ void receiveMsgFormat(unsigned char buffer[])
   Remarks:
     See prototype in app.h.
  */
-
 void APP_Initialize ( void )
 {
     //stopEverything();
@@ -187,39 +158,11 @@ void APP_Initialize ( void )
     /* TODO: Initialize your application's state machine and other
      * parameters.
      */
-    //Create the queue
-    appData.local_q = xQueueCreate(10, sizeof(unsigned int));
-    //Ensure queue was created. If not, do not continue and turn on LED
-    if(appData.local_q == 0)
-    {
-        stopEverything();
-    }
     appData.sensor1_q = xQueueCreate(100, sizeof(unsigned char));
     if(appData.sensor1_q == 0)
     {
         stopEverything();
     }
-    //stopEverything()
-    //Create the timer
-    appData.local_timer = xTimerCreate( "50msTimer",
-                50 / portTICK_PERIOD_MS,
-                pdTRUE,
-                0,
-                vTimerCallback );
-    
-    //Ensure timer was created. If not, do not continue and turn on LED
-    if(appData.local_timer == 0)
-    {
-        stopEverything();
-    }
-    BaseType_t started = xTimerStart(appData.local_timer, 0);
-    
-    //Ensure the timer started successfully. If not, do not continue and turn
-    // on LED
-    if(started == pdFAIL)
-    {
-        stopEverything();
-    }   
     
     //Setup AD Driver
     SYS_INT_SourceEnable(INT_SOURCE_ADC_1);
@@ -229,6 +172,9 @@ void APP_Initialize ( void )
     PLIB_ADC_MuxAInputScanEnable(ADC_ID_1);
     DRV_ADC_Start();
     
+    step = 0;
+    step2 = 0;
+    old_s1msg = 0;
     /* Initialization is done, allow the state machine to continue */
     appData.state = APP_STATE_OUTPUT;
 }
@@ -259,26 +205,13 @@ void APP_Tasks ( void )
             
             //Receive Information from the Queue
 #ifdef MACRO_DEBUG
-debugChar(0x03);
+debugChar(start_of_app_task);
 #endif 
-            //Number of elapsed ms.
-            unsigned int ms;
-            BaseType_t received = xQueueReceive(appData.local_q , &ms, portMAX_DELAY);
-            //If not received, stop and turn on LED.
-            if(received == pdFALSE)
-            {
-                stopEverything();
-            }
-            
-            //Read a value from the xQueue every 10ms
-            unsigned char sensorRead;
-            BaseType_t sensorReceived;
 
-//            sensorReceived = xQueueReceive(appData.sensor1_q , &sensorRead, portMAX_DELAY);
 //            debugChar(sensorRead);
 //            stopEverything();
 #ifdef MACRO_DEBUG
-debugChar(0x04);
+debugChar(before_receiving_sensordata);
 #endif
             //If not received, stop and turn on LED.
             //if(sensorReceived == pdFALSE)
@@ -292,20 +225,46 @@ debugChar(0x04);
             
             //SendUSARTMsgToMsgQ("My name is Andrew");
             unsigned char s1msg;
-            unsigned char s2msg;
-            unsigned char s3msg;
-            unsigned char s4msg;
-
+            
 //            stopEverything();
             s1msg = sensor1ReceiveVal();
-            s2msg = sensor2ReceiveVal();
-            s3msg = sensor3ReceiveVal();
-            s4msg = sensor4ReceiveVal();
-            unsigned char buffer[10] = {0x81,0x10,0x00,0x00,0x00,s1msg,s2msg,s3msg,s4msg,0x88};
+            if(old_s1msg == s1msg)
+            {
+                step++;
+            }
+            else
+            {
+                //debugChar(0xE1);
+                old_s1msg = s1msg;
+                step = 0;
+            }
+            /*
+            if(s1msg == 0)
+            {
+                step++;
+            }*/
+            if(step >= 200)
+            {
+                step = 0;
+                unsigned char buffer[10] = {0x81,0x10,0x00,0x00,0x00,s1msg,0xD2,0xD3,0xD4,0x88};
+                debugChar(s1msg);
+                //sendMsgToWIFLY(buffer);
+            }/*
+            if(s1msg >= 6)
+            {
+                step2++;
+            }
+            if(step2 >= 100)
+            {
+                step2 = 0;
+                unsigned char buffer[10] = {0x81,0x10,0x00,0x00,0x00,s1msg,0xD2,0xD3,0xD4,0x88};
+                debugChar(0xEA);
+                //sendMsgToWIFLY(buffer);
+            }*/
+//            debugChar(0x00);
             //debugBuffer(buffer, 10);
-            //debugChar(s1msg);
-            //sendMsgToWIFLY(buffer);
             //Once the Task runs once, restart the ISR to read values
+            
             PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_ADC_1);
             
             break;

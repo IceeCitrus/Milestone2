@@ -57,9 +57,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include "debugging_task.h"
 #include "messaging_task.h"
-#include "sensor2.h"
-#include "sensor3.h"
-#include "sensor4.h"
 
 
 // *****************************************************************************
@@ -72,9 +69,6 @@ static void _SYS_Tasks ( void );
 static void _APP_Tasks(void);
 static void _DEBUGGING_TASK_Tasks(void);
 static void _MESSAGING_TASK_Tasks(void);
-static void _SENSOR2_Tasks(void);
-static void _SENSOR3_Tasks(void);
-static void _SENSOR4_Tasks(void);
 
 
 // *****************************************************************************
@@ -111,21 +105,6 @@ void SYS_Tasks ( void )
     /* Create OS Thread for MESSAGING_TASK Tasks. */
     xTaskCreate((TaskFunction_t) _MESSAGING_TASK_Tasks,
                 "MESSAGING_TASK Tasks",
-                1024, NULL, 1, NULL);
-
-    /* Create OS Thread for SENSOR2 Tasks. */
-    xTaskCreate((TaskFunction_t) _SENSOR2_Tasks,
-                "SENSOR2 Tasks",
-                1024, NULL, 1, NULL);
-
-    /* Create OS Thread for SENSOR3 Tasks. */
-    xTaskCreate((TaskFunction_t) _SENSOR3_Tasks,
-                "SENSOR3 Tasks",
-                1024, NULL, 1, NULL);
-
-    /* Create OS Thread for SENSOR4 Tasks. */
-    xTaskCreate((TaskFunction_t) _SENSOR4_Tasks,
-                "SENSOR4 Tasks",
                 1024, NULL, 1, NULL);
 
     /**************
@@ -206,57 +185,6 @@ static void _MESSAGING_TASK_Tasks(void)
     while(1)
     {
         MESSAGING_TASK_Tasks();
-    }
-}
-
-
-/*******************************************************************************
-  Function:
-    void _SENSOR2_Tasks ( void )
-
-  Summary:
-    Maintains state machine of SENSOR2.
-*/
-
-static void _SENSOR2_Tasks(void)
-{
-    while(1)
-    {
-        SENSOR2_Tasks();
-    }
-}
-
-
-/*******************************************************************************
-  Function:
-    void _SENSOR3_Tasks ( void )
-
-  Summary:
-    Maintains state machine of SENSOR3.
-*/
-
-static void _SENSOR3_Tasks(void)
-{
-    while(1)
-    {
-        SENSOR3_Tasks();
-    }
-}
-
-
-/*******************************************************************************
-  Function:
-    void _SENSOR4_Tasks ( void )
-
-  Summary:
-    Maintains state machine of SENSOR4.
-*/
-
-static void _SENSOR4_Tasks(void)
-{
-    while(1)
-    {
-        SENSOR4_Tasks();
     }
 }
 

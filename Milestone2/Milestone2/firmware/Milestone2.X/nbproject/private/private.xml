@@ -3,14 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Andrew%20Wang/College/Senior_Spring/ECE4534_Embedded/Milestone2/Milestone2/firmware/src/app.h</file>
             <file>file:/C:/Users/Andrew%20Wang/College/Senior_Spring/ECE4534_Embedded/Milestone2/Milestone2/firmware/src/system_config/default/system_interrupt.c</file>
-            <file>file:/C:/Users/Andrew%20Wang/College/Senior_Spring/ECE4534_Embedded/Milestone2/Milestone2/firmware/src/system_config/default/system_tasks.c</file>
-            <file>file:/C:/Users/Andrew%20Wang/College/Senior_Spring/ECE4534_Embedded/Milestone2/Milestone2/firmware/src/messaging_task.h</file>
+            <file>file:/C:/microchip/harmony/v1_06_02/framework/peripheral/adc/processor/adc_p32mx795f512l.h</file>
+            <file>file:/C:/microchip/harmony/v1_06_02/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c</file>
             <file>file:/C:/Users/Andrew%20Wang/College/Senior_Spring/ECE4534_Embedded/Milestone2/Milestone2/firmware/src/app.c</file>
             <file>file:/C:/Users/Andrew%20Wang/College/Senior_Spring/ECE4534_Embedded/Milestone2/Milestone2/firmware/src/debugging_task.c</file>
-            <file>file:/C:/Users/Andrew%20Wang/College/Senior_Spring/ECE4534_Embedded/Milestone2/Milestone2/firmware/src/app_public.h</file>
-            <file>file:/C:/microchip/harmony/v1_06_02/third_party/rtos/FreeRTOS/Source/tasks.c</file>
+            <file>file:/C:/Users/Andrew%20Wang/College/Senior_Spring/ECE4534_Embedded/Milestone2/Milestone2/firmware/src/debugging_task_public.h</file>
+            <file>file:/C:/Users/Andrew%20Wang/College/Senior_Spring/ECE4534_Embedded/Milestone2/Milestone2/firmware/src/messaging_task.c</file>
         </group>
     </open-files>
 </project-private>

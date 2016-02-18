@@ -110,7 +110,9 @@ typedef enum
   Remarks:
     Application strings and buffers are be defined outside this structure.
  */
-
+int step;
+int step2;
+unsigned old_s1msg;
 typedef struct
 {
     /* The application's current state */
@@ -119,9 +121,9 @@ typedef struct
     //Handle to the local queue
     QueueHandle_t local_q;
     QueueHandle_t sensor1_q;
+    QueueHandle_t data_q;
     //Handle to the local timer used
     TimerHandle_t local_timer;
-    
     //The character to output
     unsigned char blink;
 } APP_DATA;

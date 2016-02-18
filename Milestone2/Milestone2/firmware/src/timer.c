@@ -62,9 +62,6 @@ void vTimerCallback( TimerHandle_t pxTimer ) {
     ticks++;
     //Send the number of ms elapsed. One tick is 50ms.
     sensor1SendTimerValToMsgQ(ticks * 50);
-    sensor2SendTimerValToMsgQ(ticks * 50);
-    sensor3SendTimerValToMsgQ(ticks * 50);
-    sensor4SendTimerValToMsgQ(ticks * 50);
 }
 
 
