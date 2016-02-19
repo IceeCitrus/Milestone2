@@ -184,4 +184,5 @@ build/default/production/_ext/1688732426/system_interrupt.o:  \
  ../../../../../../../../../microchip/harmony/v1_06_02/third_party/rtos/FreeRTOS/Source/include/queue.h  \
  ../src/debugging_task_public.h  \
 ../src/messaging_task.h  \
- ../src/system_config/default/system_definitions.h 
+ ../src/app_timer.h  \
+../src/system_config/default/system_definitions.h 

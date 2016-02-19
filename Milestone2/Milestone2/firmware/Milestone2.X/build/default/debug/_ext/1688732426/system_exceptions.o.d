@@ -186,4 +186,5 @@ build/default/debug/_ext/1688732426/system_exceptions.o:  \
  ../src/debugging_task_public.h  \
 ../src/debugging_task.h  \
  ../src/messaging_task.h  \
+../src/app_timer.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/debug/sys_debug.h 

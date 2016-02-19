@@ -55,9 +55,6 @@ extern "C" {
 #define start_of_app_task 0x06
 #define before_receiving_sensordata 0x07
 #define recv_sensor1 0x08
-#define recv_sensor2 0x09
-#define recv_sensor3 0x0A
-#define recv_sensor4 0x0B
 #define start_ADC_ISR 0x0C
 #define end_ADC_ISR 0x0D
 #define before_transmitting_USART 0x0E

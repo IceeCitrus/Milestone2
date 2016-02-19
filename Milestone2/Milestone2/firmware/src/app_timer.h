@@ -1,11 +1,11 @@
 /*******************************************************************************
- Task to demonstrate debug output
+  MPLAB Harmony Application Header File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    app.h
+    app_timer.h
 
   Summary:
     This header file provides prototypes and definitions for the application.
@@ -43,8 +43,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _APP_H
-#define _APP_H
+#ifndef _APP_TIMER_H
+#define _APP_TIMER_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -91,11 +91,12 @@ extern "C" {
 typedef enum
 {
 	/* Application's state machine's initial state. */
-	APP_STATE_INIT=0,
+	APP_TIMER_STATE_INIT=0,
 
 	/* TODO: Define states used by the application state machine. */
-    APP_STATE_OUTPUT = 1,
-} APP_STATES;
+	/* TODO: Define states used by the application state machine. */
+    APP_TIMER_STATE_OUTPUT = 1,
+} APP_TIMER_STATES;
 
 
 // *****************************************************************************
@@ -110,37 +111,21 @@ typedef enum
   Remarks:
     Application strings and buffers are be defined outside this structure.
  */
-int step;
-int step2;
-unsigned old_s1msg;
-typedef struct
-{
-    /* The application's current state */
-    APP_STATES state;
-    
-    //Handle to the local queue
-    QueueHandle_t local_q;
-    QueueHandle_t sensor1_q;
-    QueueHandle_t data_q;
-    //Handle to the local timer used
-    TimerHandle_t local_timer;
-    //The character to output
-    unsigned char blink;
-} APP_DATA;
 
 typedef struct
 {
-    unsigned char header;
-    unsigned char dst;
-    unsigned char type;
-    unsigned char msgNum1;
-    unsigned char msgNum2;
-    unsigned char data1;
-    unsigned char data2;
-    unsigned char data3;
-    unsigned char data4;
-    unsigned char footer;
-} MSG_FORMAT;
+    /* The application's current state */
+    APP_TIMER_STATES state;
+
+    //Handle to the local queue
+    QueueHandle_t local_q;
+    QueueHandle_t data_q;
+    
+    int obstacle;
+    int step2;
+    //Handle to the local timer used
+    TimerHandle_t local_timer;
+} APP_TIMER_DATA;
 
 
 // *****************************************************************************
@@ -150,7 +135,6 @@ typedef struct
 // *****************************************************************************
 /* These routines are called by drivers when certain events occur.
 */
-
 /*******************************************************************************
   Function:
     void vTimerCallback( TimerHandle_t pxTimer )
@@ -187,7 +171,7 @@ void vTimerCallback( TimerHandle_t pxTimer );
 
 /*******************************************************************************
   Function:
-    void APP_Initialize ( void )
+    void APP_TIMER_Initialize ( void )
 
   Summary:
      MPLAB Harmony application initialization routine.
@@ -209,19 +193,19 @@ void vTimerCallback( TimerHandle_t pxTimer );
 
   Example:
     <code>
-    APP_Initialize();
+    APP_TIMER_Initialize();
     </code>
 
   Remarks:
     This routine must be called from the SYS_Initialize function.
 */
 
-void APP_Initialize ( void );
+void APP_TIMER_Initialize ( void );
 
 
 /*******************************************************************************
   Function:
-    void APP_Tasks ( void )
+    void APP_TIMER_Tasks ( void )
 
   Summary:
     MPLAB Harmony Demo application tasks function
@@ -242,18 +226,17 @@ void APP_Initialize ( void );
 
   Example:
     <code>
-    APP_Tasks();
+    APP_TIMER_Tasks();
     </code>
 
   Remarks:
     This routine must be called from SYS_Tasks() routine.
  */
 
-void APP_Tasks( void );
+void APP_TIMER_Tasks( void );
 
 
-
-#endif /* _APP_H */
+#endif /* _APP_TIMER_H */
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

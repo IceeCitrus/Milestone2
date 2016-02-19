@@ -1,65 +1,7 @@
-build/default/debug/_ext/1345626252/drv_usart_static.o:  \
- ../src/system_config/default/framework/driver/usart/drv_usart_static.c  \
- ../src/system_config/default/system_config.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/plib_usart.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/usart_processor.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/usart_p32xxxx.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/usart_p32mx795f512l.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/peripheral_common_32bit.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/peripheral_common.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_EnableControl_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_HandShakeMode_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_HandShakeMode_Unsupported.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_IrDAControl_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_LineControlMode_RXandTXCombined.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_Loopback_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_OperationMode_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_OperationMode_Unsupported.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_StopInIdle_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_WakeOnStart_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_BaudRate_In16BitRegister.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_BaudRateAutoDetect_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_BaudRateHigh_In16BitRegister.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_Receiver_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_Receiver9Bits_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverAddressAutoDetect_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverAddressDetect_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverDataAvailable_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverEnableControl_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverIdle_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverFramingError_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverInterruptMode_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverPolarityInvert_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverParityError_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverOverrunError_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_Transmitter_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_Transmitter9Bits_InDataOnly.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterBreak_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterBufferFull_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterEmpty_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterEnableControl_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterInterruptMode_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterIdleIsLow_pic32.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/plib_int.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/int_processor.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/int_p32xxxx.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/plib_int_private_pic32.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/int_p32mx795f512l.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_SingleVectorShadowSet_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_VectorSelect_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_ProximityTimerEnable_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_ProximityTimerControl_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_ExternalINTEdgeSelect_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_INTCPUPriority_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_INTCPUVector_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_SourceFlag_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_SourceControl_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_VectorPriority_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_CPUCurrentPriorityLevel_Default.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_EnableControl_PIC32.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_ShadowRegisterAssign_Unsupported.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_VariableOffset_Unsupported.h  \
- ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_SoftwareNMI_Unsupported.h  \
+build/default/debug/_ext/1360937237/app_timer.o:  \
+../src/app_timer.c  \
+ ../src/app_timer.h  \
+../src/system_config/default/system_config.h  \
  ../src/system_config/default/system_definitions.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/common/sys_common.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/common/sys_module.h  \
@@ -68,6 +10,8 @@ build/default/debug/_ext/1345626252/drv_usart_static.o:  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/osc/processor/osc_processor.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/osc/processor/osc_p32xxxx.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/osc/processor/osc_p32mx795f512l.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/peripheral_common_32bit.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/peripheral_common.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/osc/processor/../templates/osc_OnWaitAction_Default.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/osc/processor/../templates/osc_SecondaryEnable_Default.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/osc/processor/../templates/osc_SecondaryReady_Default.h  \
@@ -107,6 +51,26 @@ build/default/debug/_ext/1345626252/drv_usart_static.o:  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/devcon/sys_devcon.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/system.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/int/sys_int.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/plib_int.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/int_processor.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/int_p32xxxx.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/plib_int_private_pic32.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/int_p32mx795f512l.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_SingleVectorShadowSet_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_VectorSelect_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_ProximityTimerEnable_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_ProximityTimerControl_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_ExternalINTEdgeSelect_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_INTCPUPriority_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_INTCPUVector_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_SourceFlag_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_SourceControl_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_VectorPriority_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_CPUCurrentPriorityLevel_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_EnableControl_PIC32.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_ShadowRegisterAssign_Unsupported.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_VariableOffset_Unsupported.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/int/processor/../templates/int_SoftwareNMI_Unsupported.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/int/sys_int_mapping.h  \
  ../src/system_config/default/framework/driver/adc/drv_adc_static.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/adc/plib_adc.h  \
@@ -139,6 +103,43 @@ build/default/debug/_ext/1345626252/drv_usart_static.o:  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/adc/processor/../templates/adc_ResultBufferFillStatus_Default.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/adc/processor/../templates/adc_ResultGetByIndex_Default.h  \
  ../src/system_config/default/framework/driver/usart/drv_usart_static.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/plib_usart.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/usart_processor.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/usart_p32xxxx.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/usart_p32mx795f512l.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_EnableControl_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_HandShakeMode_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_HandShakeMode_Unsupported.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_IrDAControl_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_LineControlMode_RXandTXCombined.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_Loopback_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_OperationMode_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_OperationMode_Unsupported.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_StopInIdle_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_WakeOnStart_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_BaudRate_In16BitRegister.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_BaudRateAutoDetect_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_BaudRateHigh_In16BitRegister.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_Receiver_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_Receiver9Bits_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverAddressAutoDetect_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverAddressDetect_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverDataAvailable_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverEnableControl_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverIdle_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverFramingError_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverInterruptMode_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverPolarityInvert_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverParityError_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_ReceiverOverrunError_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_Transmitter_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_Transmitter9Bits_InDataOnly.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterBreak_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterBufferFull_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterEmpty_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterEnableControl_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterInterruptMode_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/usart/processor/../templates/usart_TransmitterIdleIsLow_pic32.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/ports/sys_ports.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/ports/plib_ports.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/ports/processor/ports_processor.h  \

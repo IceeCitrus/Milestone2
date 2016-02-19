@@ -184,4 +184,5 @@ build/default/production/_ext/1360937237/timer.o:  \
  ../src/debugging_task_public.h  \
 ../src/debugging_task.h  \
  ../src/messaging_task.h  \
+../src/app_timer.h  \
 ../src/app.h 

@@ -57,6 +57,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include "debugging_task.h"
 #include "messaging_task.h"
+#include "app_timer.h"
 
 
 // *****************************************************************************
@@ -69,6 +70,7 @@ static void _SYS_Tasks ( void );
 static void _APP_Tasks(void);
 static void _DEBUGGING_TASK_Tasks(void);
 static void _MESSAGING_TASK_Tasks(void);
+static void _APP_TIMER_Tasks(void);
 
 
 // *****************************************************************************
@@ -105,6 +107,11 @@ void SYS_Tasks ( void )
     /* Create OS Thread for MESSAGING_TASK Tasks. */
     xTaskCreate((TaskFunction_t) _MESSAGING_TASK_Tasks,
                 "MESSAGING_TASK Tasks",
+                1024, NULL, 1, NULL);
+
+    /* Create OS Thread for APP_TIMER Tasks. */
+    xTaskCreate((TaskFunction_t) _APP_TIMER_Tasks,
+                "APP_TIMER Tasks",
                 1024, NULL, 1, NULL);
 
     /**************
@@ -185,6 +192,23 @@ static void _MESSAGING_TASK_Tasks(void)
     while(1)
     {
         MESSAGING_TASK_Tasks();
+    }
+}
+
+
+/*******************************************************************************
+  Function:
+    void _APP_TIMER_Tasks ( void )
+
+  Summary:
+    Maintains state machine of APP_TIMER.
+*/
+
+static void _APP_TIMER_Tasks(void)
+{
+    while(1)
+    {
+        APP_TIMER_Tasks();
     }
 }
 

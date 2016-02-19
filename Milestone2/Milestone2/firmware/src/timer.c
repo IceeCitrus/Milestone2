@@ -60,8 +60,9 @@ unsigned int ticks = 0;
  */
 void vTimerCallback( TimerHandle_t pxTimer ) {
     ticks++;
+    //debugChar(ticks);
     //Send the number of ms elapsed. One tick is 50ms.
-    sensor1SendTimerValToMsgQ(ticks * 50);
+    SendTimerValToMsgQ(ticks * 50);
 }
 
 

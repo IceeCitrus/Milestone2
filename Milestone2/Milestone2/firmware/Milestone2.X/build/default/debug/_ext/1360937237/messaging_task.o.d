@@ -185,4 +185,5 @@ build/default/debug/_ext/1360937237/messaging_task.o:  \
  ../src/debugging_task_public.h  \
 ../src/debugging_task.h  \
  ../src/messaging_task.h  \
-../src/messaging_task_public.h 
+../src/app_timer.h  \
+ ../src/messaging_task_public.h 

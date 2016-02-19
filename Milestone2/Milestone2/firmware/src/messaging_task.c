@@ -129,6 +129,7 @@ char isQueueEmpty()
 
 unsigned char messageQ()
 {
+    
     unsigned char data = 0x0;
     BaseType_t errors;
     errors = xQueueReceiveFromISR(msg_taskData.sendMsg_q, &data, NULL);
@@ -234,7 +235,7 @@ void MESSAGING_TASK_Tasks ( void )
 #endif
                 msg_Format.numInvalid++;
                 //sendMsgToWIFLY("NO\t");
-                sendByteToWIFLY(msg_Format.numInvalid);
+                //sendByteToWIFLY(msg_Format.numInvalid);
                 //sendByteToWIFLY('\n');            
                 msg_Format.validHeader = 0;
                 msg_Format.validFooter = 0;
@@ -323,7 +324,7 @@ void MESSAGING_TASK_Tasks ( void )
                 //sendByteToWIFLY(0xF1);
                 msg_Format.numInvalid++;              
                 //sendMsgToWIFLY("NO\t");
-                sendByteToWIFLY(msg_Format.numInvalid);
+                //sendByteToWIFLY(msg_Format.numInvalid);
                 //sendByteToWIFLY('\n');
                 msg_Format.validHeader = 0;
                 msg_Format.valid = 0;
