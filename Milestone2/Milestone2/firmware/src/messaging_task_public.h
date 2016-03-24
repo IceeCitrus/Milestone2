@@ -15,6 +15,25 @@ extern "C" {
     void sendByteToWIFLY(unsigned char byte);
     void ReceiveUSARTMsgFromMsgQ(unsigned char usartMsg);
 
+typedef struct
+{
+    int count;
+    int validHeader;
+    int validFooter;
+    unsigned char header;
+    unsigned char dst;
+    unsigned char type;
+    unsigned char msgNum1;
+    unsigned char msgNum2;
+    unsigned char data1;
+    unsigned char data2;
+    unsigned char data3;
+    unsigned char data4;
+    unsigned char footer;
+    unsigned char valid;
+    int numInvalid;
+} MESSAGE_FORMAT;
+    
 #ifdef	__cplusplus
 }
 #endif

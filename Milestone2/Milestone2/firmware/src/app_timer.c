@@ -154,7 +154,7 @@ void APP_TIMER_Initialize ( void )
                 pdTRUE,
                 0,
                 vTimerCallback );
-    
+    //1000
     //Ensure timer was created. If not, do not continue and turn on LED
     if(app_timerData.local_timer == 0)
     {
@@ -228,64 +228,72 @@ void APP_TIMER_Tasks ( void )
                     app_timerData.step2++;
                     if(app_timerData.step2 == 1) // 0x0A LR orientation
                     {
-                        unsigned char buffer[10] = {0x81,'C',0x40,0x01,0x00,0x0A,0xD2,0xD3,0xD4,0x88};
+                        unsigned char buffer[10] = {0x81,'C',0x0A,0x00,0x00,'L','R','O','R',0x88};
 //                        unsigned char bufferM[10] = {0x81,'M','M',0x01,0x00,0x0A,0xD2,0xD3,0xD4,0x88};
-                        unsigned char bufferM[10] = {0x81,'M','L','R','O','R','I','E','N',0x88};
+//                        unsigned char bufferM[10] = {0x81,'M','L','R','O','R','I','E','N',0x88};
 //                        debugChar(0x0A);       
-//                        sendMsgToWIFLY(buffer);
+                        sendMsgToWIFLY(buffer,10);
 //                        sendMsgToWIFLY(bufferM,10);
                     }
                     if(app_timerData.step2 == 2) // 0x0B LR Coordinate
                     {
-                        unsigned char buffer[10] = {0x81,'C',0x40,0x02,0x00,0x0B,0xD2,0xD3,0xD4,0x88};
+                        unsigned char buffer[10] = {0x81,'C',0x0B,0x00,0x00,'L','R','C','O',0x88};
 //                        unsigned char bufferM[10] = {0x81,'M','M',0x02,0x00,0x0B,0xD2,0xD3,0xD4,0x88};
-                        unsigned char bufferM[10] = {0x81,'M','L','R','C','O','O','R','D',0x88};
+//                        unsigned char bufferM[10] = {0x81,'M','L','R','C','O','O','R','D',0x88};
 //                        debugChar(0x0B);       
-//                        sendMsgToWIFLY(buffer);
+                        sendMsgToWIFLY(buffer,10);
 //                        sendMsgToWIFLY(bufferM,10);
                     }
                     if(app_timerData.step2 == 3) // 0x0C FR orientation
                     {
-                        unsigned char buffer[10] = {0x81,'C',0x40,0x03,0x00,0x0C,0xD2,0xD3,0xD4,0x88};
+                        unsigned char buffer[10] = {0x81,'C',0x0C,0x00,0x00,'F','R','O','R',0x88};
 //                        unsigned char bufferM[10] = {0x81,'M','M',0x03,0x00,0x0C,0xD2,0xD3,0xD4,0x88};
-                        unsigned char bufferM[10] = {0x81,'M','F','R','O','R','I','E','N',0x88};
+//                        unsigned char bufferM[10] = {0x81,'M','F','R','O','R','I','E','N',0x88};
 //                        debugChar(0x0C);       
-//                        sendMsgToWIFLY(buffer);
+                        sendMsgToWIFLY(buffer,10);
 //                        sendMsgToWIFLY(bufferM,10);
                     }
                     if(app_timerData.step2 == 4 && app_timerData.obstacle == 1) // 0x0D FR Coordinate
                     {
                         app_timerData.step2 = 0;
-                        unsigned char buffer[10] = {0x81,'C',0x40,0x04,0x00,0x0D,0xD2,0xD3,0xD4,0x88};
+                        unsigned char buffer[10] = {0x81,'C',0x0D,0x00,0x00,'F','R','C','O',0x88};
 //                        unsigned char bufferM[10] = {0x81,'M','M',0x04,0x00,0x0D,0xD2,0xD3,0xD4,0x88};
-                        unsigned char bufferM[10] = {0x81,'M','F','R','C','O','O','R','D',0x88};
+//                        unsigned char bufferM[10] = {0x81,'M','F','R','C','O','O','R','D',0x88};
 //                        debugChar(0x0D);       
-//                        sendMsgToWIFLY(buffer);
+                        sendMsgToWIFLY(buffer,10);
 //                        sendMsgToWIFLY(bufferM,10);
                     }
                     if(app_timerData.step2 == 4 && app_timerData.obstacle == 0) // 0x0E Obstacle Coordinate
                     {
                         app_timerData.obstacle = 1;
                         app_timerData.step2 = 0;
-                        unsigned char buffer[10] = {0x81,'C',0x40,0x05,0x00,0x0E,0xD2,0xD3,0xD4,0x88};
+                        unsigned char buffer[10] = {0x81,'C',0x0E,0x00,0x00,'O','B','C','O',0x88};
 //                        unsigned char bufferM[10] = {0x81,'M','M',0x05,0x00,0x0D,0xD2,0xD3,0xD4,0x88};
-                        unsigned char bufferM[10] = {0x81,'M','O','B','S','T','A','C','L',0x88};
+//                        unsigned char bufferM[10] = {0x81,'M','O','B','S','T','A','C','L',0x88};
 //                        debugChar(0x0E);       
-//                        sendMsgToWIFLY(buffer);
+                        sendMsgToWIFLY(buffer,10);
 //                        sendMsgToWIFLY(bufferM,10);
                     }
                 }
-                if(ms % 10000 == 0)
+            }
+            if(ms % 1000 == 0)
+            {
+                if(data <= 5)
                 {
-                    if(app_timerData.obstacle == 1)
-                    {
-                        unsigned char buffer[10] = {0x81,'C',0x40,0x04,0x00,0x0E,0xD2,0xD3,0xD4,0x88};
-//                        unsigned char bufferM[10] = {0x81,'M','M',0x04,0x00,0x0E,0xD2,0xD3,0xD4,0x88};
-                        unsigned char bufferM[10] = {0x81,'M','O','B','S','T','A','C','L',0x88};
-//                        debugChar(0x0F);
-//                        sendMsgToWIFLY(buffer);
-                        sendMsgToWIFLY(bufferM,10);
-                    }
+                    unsigned char buffer[10] = {0x81,'C',0x0B,0x00,0x00,'V','A','L',data,0x88};
+//                        unsigned char bufferM[10] = {0x81,'M','M',0x02,0x00,0x0B,0xD2,0xD3,0xD4,0x88};
+//                        unsigned char bufferM[10] = {0x81,'M','L','R','C','O','O','R','D',0x88};
+//                        debugChar(0x0B);       
+                    sendMsgToWIFLY(buffer,10);
+                }
+                if(app_timerData.obstacle == 1)
+                {
+                    unsigned char buffer[10] = {0x81,'C',0x0E,0x00,0x00,'V','A','L',data,0x88};
+    //                        unsigned char bufferM[10] = {0x81,'M','M',0x04,0x00,0x0E,0xD2,0xD3,0xD4,0x88};
+    //                        unsigned char bufferM[10] = {0x81,'M','O','B','S','T','A','C','L',0x88};
+    //                        debugChar(0x0F);
+                    sendMsgToWIFLY(buffer,10);
+    //                        sendMsgToWIFLY(bufferM,10);
                 }
             }
             break;

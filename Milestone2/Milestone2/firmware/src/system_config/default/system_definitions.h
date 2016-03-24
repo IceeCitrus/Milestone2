@@ -56,8 +56,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system/clk/sys_clk_static.h"
 #include "system/devcon/sys_devcon.h"
 #include "system/int/sys_int.h"
-#include "driver/adc/drv_adc_static.h"
-#include "peripheral/int/plib_int.h"
 #include "driver/usart/drv_usart_static.h"
 #include "peripheral/usart/plib_usart.h"
 #include "peripheral/int/plib_int.h"
@@ -69,7 +67,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include "debugging_task.h"
 #include "messaging_task.h"
-#include "app_timer.h"
+#include "pixy_calc.h"
 
 
 // DOM-IGNORE-BEGIN

@@ -57,7 +57,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include "debugging_task.h"
 #include "messaging_task.h"
-#include "app_timer.h"
+#include "pixy_calc.h"
 
 
 // *****************************************************************************
@@ -70,7 +70,7 @@ static void _SYS_Tasks ( void );
 static void _APP_Tasks(void);
 static void _DEBUGGING_TASK_Tasks(void);
 static void _MESSAGING_TASK_Tasks(void);
-static void _APP_TIMER_Tasks(void);
+static void _PIXY_CALC_Tasks(void);
 
 
 // *****************************************************************************
@@ -109,9 +109,9 @@ void SYS_Tasks ( void )
                 "MESSAGING_TASK Tasks",
                 1024, NULL, 1, NULL);
 
-    /* Create OS Thread for APP_TIMER Tasks. */
-    xTaskCreate((TaskFunction_t) _APP_TIMER_Tasks,
-                "APP_TIMER Tasks",
+    /* Create OS Thread for PIXY_CALC Tasks. */
+    xTaskCreate((TaskFunction_t) _PIXY_CALC_Tasks,
+                "PIXY_CALC Tasks",
                 1024, NULL, 1, NULL);
 
     /**************
@@ -198,17 +198,17 @@ static void _MESSAGING_TASK_Tasks(void)
 
 /*******************************************************************************
   Function:
-    void _APP_TIMER_Tasks ( void )
+    void _PIXY_CALC_Tasks ( void )
 
   Summary:
-    Maintains state machine of APP_TIMER.
+    Maintains state machine of PIXY_CALC.
 */
 
-static void _APP_TIMER_Tasks(void)
+static void _PIXY_CALC_Tasks(void)
 {
     while(1)
     {
-        APP_TIMER_Tasks();
+        PIXY_CALC_Tasks();
     }
 }
 

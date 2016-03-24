@@ -8,6 +8,8 @@
 #ifndef MESSAGING_H
 #define	MESSAGING_H
 
+#define TEST_DROP_MESSAGE
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -102,12 +104,16 @@ typedef struct
 {
     /* The application's current state */
     MESSAGING_TASK_STATES state;
-
+    unsigned int msgCountA;
+    unsigned int msgCountB;
+    unsigned int msgCountC;
+    unsigned int msgCountD;
+    unsigned int msgCountE;
     /* TODO: Define any additional data used by the application. */
     QueueHandle_t sendMsg_q;
     QueueHandle_t receiveMsg_q;
 } MESSAGING_TASK_DATA;
-
+/*
 typedef struct
 {
     int count;
@@ -126,7 +132,7 @@ typedef struct
     unsigned char valid;
     int numInvalid;
 } MESSAGE_FORMAT;
-
+*/
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Routines

@@ -181,9 +181,8 @@ void SYS_Initialize ( void* data )
     SYS_PORTS_Initialize();
 
     /* Initialize Drivers */
-    /* Initialize ADC */
-    DRV_ADC_Initialize();
     DRV_USART0_Initialize();
+    DRV_USART1_Initialize();
 
     /* Initialize System Services */
     SYS_INT_Initialize();  
@@ -194,7 +193,7 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
     DEBUGGING_TASK_Initialize();
     MESSAGING_TASK_Initialize();
-    APP_TIMER_Initialize();
+    PIXY_CALC_Initialize();
 }
 
 

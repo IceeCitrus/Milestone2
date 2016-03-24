@@ -95,6 +95,43 @@ MESSAGE_FORMAT msg_Format;
 // *****************************************************************************
 void sendMsgToWIFLY(unsigned char message[], int num)
 {
+    if(message[0] == 0x81 && num == 10)
+    {
+        if(message[2] == 0x0A)
+        {
+            msg_taskData.msgCountA++;
+            message[3] = msg_taskData.msgCountA >> 8;
+            message[4] = (unsigned char) msg_taskData.msgCountA;
+        }
+        else if(message[2] == 0x0B)
+        {
+            msg_taskData.msgCountB++;
+            message[3] = msg_taskData.msgCountB >> 8;
+            message[4] = (unsigned char) msg_taskData.msgCountB;
+        }
+        else if(message[2] == 0x0C)
+        {
+            msg_taskData.msgCountC++;
+            message[3] = msg_taskData.msgCountC >> 8;
+            message[4] = (unsigned char) msg_taskData.msgCountC;
+        }
+        else if(message[2] == 0x0D)
+        {
+            msg_taskData.msgCountD++;
+            message[3] = msg_taskData.msgCountD >> 8;
+            message[4] = (unsigned char) msg_taskData.msgCountD;
+        }
+        else if(message[2] == 0x0E)
+        {
+            msg_taskData.msgCountE++;
+#ifdef TEST_DROP_MESSAGE
+            if(msg_taskData.msgCountE == 4)
+                msg_taskData.msgCountE++;
+#endif
+            message[3] = msg_taskData.msgCountE >> 8;
+            message[4] = (unsigned char) msg_taskData.msgCountE;
+        }
+    }
     int i;
     for(i = 0; i < num; i++)
     {
@@ -168,6 +205,11 @@ void MESSAGING_TASK_Initialize ( void )
     {
         stopEverything();
     }
+    msg_taskData.msgCountA = 0;
+    msg_taskData.msgCountB = 0;
+    msg_taskData.msgCountC = 0;
+    msg_taskData.msgCountD = 0;
+    msg_taskData.msgCountE = 0;
     msg_Format.count = 0;
     msg_Format.validHeader = 0;
     msg_Format.validFooter = 0;
@@ -235,7 +277,9 @@ void MESSAGING_TASK_Tasks ( void )
 #endif
                 msg_Format.numInvalid++;
                 //sendMsgToWIFLY("NO\t");
-                //sendByteToWIFLY(msg_Format.numInvalid);
+                //int invalid = msg_Format.numInvalid;
+                //unsigned buffer[10] = {0x81,'M', 0x03, 0x00, 0x00, invalid, 0x00, 0x00, 0x00, 0x88};
+                //sendMsgToWIFLY(buffer,10);
                 //sendByteToWIFLY('\n');            
                 msg_Format.validHeader = 0;
                 msg_Format.validFooter = 0;
@@ -323,7 +367,9 @@ void MESSAGING_TASK_Tasks ( void )
 #endif
                 //sendByteToWIFLY(0xF1);
                 msg_Format.numInvalid++;              
-                //sendMsgToWIFLY("NO\t");
+                //int invalid = msg_Format.numInvalid;
+                //unsigned buffer[10] = {0x81,'M', 0x03, 0x00, 0x00, invalid, 0x00, 0x00, 0x00, 0x88};
+                //sendMsgToWIFLY(buffer,10);
                 //sendByteToWIFLY(msg_Format.numInvalid);
                 //sendByteToWIFLY('\n');
                 msg_Format.validHeader = 0;

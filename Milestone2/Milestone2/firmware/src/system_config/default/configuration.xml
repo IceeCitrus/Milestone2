@@ -150,70 +150,23 @@
         <Checksum>EA425DBB02818CEF28D6D454B7F2C73B</Checksum>
       </Template>
       <Template>
-        <Name>system_interrupt_a.S</Name>
-        <Path>Source Files/app/system_config/default</Path>
-        <Checksum>2AADE7885E66E00DBB7FE911439FFA49</Checksum>
-      </Template>
-      <Template>
-        <Name>drv_adc_static.h</Name>
-        <Path>Header Files/app/system_config/default/framework/driver/adc</Path>
-        <Checksum>DA228C4429B405DC81984D73AB97988D</Checksum>
-      </Template>
-      <Template>
-        <Name>drv_adc_static.c</Name>
-        <Path>Source Files/app/system_config/default/framework/driver/adc/src</Path>
-        <Checksum>6E4F0276AD392C60487405B36BE5C303</Checksum>
-      </Template>
-      <Template>
-        <Name>drv_usart_static.c</Name>
-        <Path>Source Files/app/system_config/default/framework/driver/usart</Path>
-        <Checksum>E99F83B1AF2B9157413E2D6BC8969741</Checksum>
-      </Template>
-      <Template>
-        <Name>debugging_task.h</Name>
-        <Path>Header Files/app</Path>
-      </Template>
-      <Template>
-        <Name>debugging_task.c</Name>
-        <Path>Source Files/app</Path>
-      </Template>
-      <Template>
-        <Name>FreeRTOSConfig.h</Name>
-        <Path>Header Files/app/system_config/default</Path>
-        <Checksum>8A13F8C1D1B81346AD5B7407DB74B3DF</Checksum>
-      </Template>
-      <Template>
-        <Name>sys_clk_static.h</Name>
-        <Path>Header Files/app/system_config/default/framework/system/clk</Path>
-        <Checksum>999179DADE9ECD59953526F5E9F83ACC</Checksum>
-      </Template>
-      <Template>
-        <Name>system_interrupt.c</Name>
-        <Path>Source Files/app/system_config/default</Path>
-        <Checksum>A1A26A52D8DCD31F3FF2DC2A9B85A8B4</Checksum>
-      </Template>
-      <Template>
-        <Name>sys_clk_static.c</Name>
-        <Path>Source Files/app/system_config/default/framework/system/clk/src</Path>
-        <Checksum>1B968DA82B5DD869A6119C3B7628D753</Checksum>
-      </Template>
-      <Template>
         <Name>system_init.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>6990BB782FE38412AE10CC718909BC38</Checksum>
+        <Checksum>1FA2E97584CBB50D2B3E4D118EA9BFEB</Checksum>
       </Template>
       <Template>
         <Name>main.c</Name>
         <Path>Source Files/app</Path>
       </Template>
       <Template>
-        <Name>app_timer.c</Name>
-        <Path>Source Files/app</Path>
+        <Name>system_interrupt_a.S</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>12ABD3B8984693E74326CA77853775A8</Checksum>
       </Template>
       <Template>
         <Name>system_definitions.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>3369BC169133763AC8425A6589D8425B</Checksum>
+        <Checksum>00F332DBD342383DDF6A301C89BC0B73</Checksum>
       </Template>
       <Template>
         <Name>system_exceptions.c</Name>
@@ -225,6 +178,10 @@
         <Path>Source Files/app</Path>
       </Template>
       <Template>
+        <Name>pixy_calc.h</Name>
+        <Path>Header Files/app</Path>
+      </Template>
+      <Template>
         <Name>messaging_task.c</Name>
         <Path>Source Files/app</Path>
       </Template>
@@ -233,14 +190,36 @@
         <Path>Header Files/app</Path>
       </Template>
       <Template>
+        <Name>drv_usart_static.c</Name>
+        <Path>Source Files/app/system_config/default/framework/driver/usart</Path>
+        <Checksum>5823AF86279BEC76BFDBB68439065AB2</Checksum>
+      </Template>
+      <Template>
+        <Name>debugging_task.h</Name>
+        <Path>Header Files/app</Path>
+      </Template>
+      <Template>
         <Name>drv_usart_static.h</Name>
         <Path>Header Files/app/system_config/default/framework/driver/usart</Path>
-        <Checksum>66C127084540B78CD4F78E2FBCC6D29F</Checksum>
+        <Checksum>78816446BC37CA452E12C9F1F3586B2C</Checksum>
+      </Template>
+      <Template>
+        <Name>debugging_task.c</Name>
+        <Path>Source Files/app</Path>
+      </Template>
+      <Template>
+        <Name>pixy_calc.c</Name>
+        <Path>Source Files/app</Path>
+      </Template>
+      <Template>
+        <Name>FreeRTOSConfig.h</Name>
+        <Path>Header Files/app/system_config/default</Path>
+        <Checksum>8A13F8C1D1B81346AD5B7407DB74B3DF</Checksum>
       </Template>
       <Template>
         <Name>system_tasks.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>FDD702183E8C82D719807635AE664B5C</Checksum>
+        <Checksum>1D7A7B19864928FC6E0E9544FFC199B2</Checksum>
       </Template>
       <Template>
         <Name>system_config.h</Name>
@@ -252,13 +231,24 @@
         <Path>Header Files/app</Path>
       </Template>
       <Template>
+        <Name>sys_clk_static.h</Name>
+        <Path>Header Files/app/system_config/default/framework/system/clk</Path>
+        <Checksum>999179DADE9ECD59953526F5E9F83ACC</Checksum>
+      </Template>
+      <Template>
+        <Name>system_interrupt.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>ECEDEDD31D3619AF766D02840845BFC0</Checksum>
+      </Template>
+      <Template>
         <Name>rtos_hooks.c</Name>
         <Path>Source Files/app/system_config/default</Path>
         <Checksum>FA52743264536E5207D2ADBE57B48D05</Checksum>
       </Template>
       <Template>
-        <Name>app_timer.h</Name>
-        <Path>Header Files/app</Path>
+        <Name>sys_clk_static.c</Name>
+        <Path>Source Files/app/system_config/default/framework/system/clk/src</Path>
+        <Checksum>1B968DA82B5DD869A6119C3B7628D753</Checksum>
       </Template>
     </Templates>
     <CompilerItems>

@@ -65,6 +65,8 @@ void vTimerCallback( TimerHandle_t pxTimer ) {
     SendTimerValToMsgQ(ticks * 50);
 }
 
+void pixyCallBack(TimerHandle_t pxTimer) {
+}
 
 /* *****************************************************************************
  End of File

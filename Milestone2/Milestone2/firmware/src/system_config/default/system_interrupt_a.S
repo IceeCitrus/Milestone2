@@ -45,39 +45,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "ISR_Support.h"
 
-/* ADC Interrupt */
-   .extern  IntHandlerDrvAdc
-
-   .section	.vector_27,code, keep
-   .equ     __vector_dispatch_27, IntVectorDrvAdc
-   .global  __vector_dispatch_27
-   .set     nomicromips
-   .set     noreorder
-   .set     nomips16
-   .set     noat
-   .ent  IntVectorDrvAdc
-
-IntVectorDrvAdc:
-    la    $26,  _IntHandlerDrvAdc         
-    jr    $26
-    nop
-	.end	IntVectorDrvAdc
-
-   .section	.DrvAdc_vector_text, code, keep
-   .set     nomicromips
-   .set     noreorder
-   .set     nomips16
-   .set     noat
-   .ent  _IntHandlerDrvAdc
-
-_IntHandlerDrvAdc:
-    portSAVE_CONTEXT
-    la    s6,  IntHandlerDrvAdc
-    jalr  s6
-    nop
-    portRESTORE_CONTEXT
-    .end	_IntHandlerDrvAdc
-
 
 /* USART Instance 0 Interrupt */
 
@@ -112,6 +79,41 @@ _IntHandlerDrvUsartInstance0:
     nop
     portRESTORE_CONTEXT
     .end	_IntHandlerDrvUsartInstance0
+
+
+/* USART Instance 1 Interrupt */
+
+   .extern  IntHandlerDrvUsartInstance1
+
+   .section	.vector_32,code, keep
+   .equ     __vector_dispatch_32, IntVectorDrvUsartInstance1
+   .global  __vector_dispatch_32
+   .set     nomicromips
+   .set     noreorder
+   .set     nomips16
+   .set     noat
+   .ent  IntVectorDrvUsartInstance1
+
+IntVectorDrvUsartInstance1:
+    la    $26,  _IntHandlerDrvUsartInstance1         
+    jr    $26
+    nop
+	.end	IntVectorDrvUsartInstance1
+
+   .section	.DrvUsartInstance1_vector_text, code, keep
+   .set     nomicromips
+   .set     noreorder
+   .set     nomips16
+   .set     noat
+   .ent  _IntHandlerDrvUsartInstance1
+
+_IntHandlerDrvUsartInstance1:
+    portSAVE_CONTEXT
+    la    s6,  IntHandlerDrvUsartInstance1
+    jalr  s6
+    nop
+    portRESTORE_CONTEXT
+    .end	_IntHandlerDrvUsartInstance1
 
 /*******************************************************************************
  End of File
