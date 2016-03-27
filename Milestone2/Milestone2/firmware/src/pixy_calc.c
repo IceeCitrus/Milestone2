@@ -55,6 +55,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "pixy_calc.h"
 #include "app_public.h"
+#include "pixy_avg_public.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -219,6 +220,10 @@ void PIXY_CALC_Initialize ( void )
     pixy_calcData.state = PIXY_CALC_STATE_INIT;
     
     counter = 1;
+    xcorner = 0;
+    ycorner = 0;
+    widthcorner = 0;
+    heightcorner = 0;
     objectsFound = 0;
     refreshCoord();
     refreshLead();
@@ -256,132 +261,52 @@ void PIXY_CALC_Tasks ( void )
             {
                 case 0: // border1
                 {
-                    PIXY_DATA pixyData;
+                    PIXY_AVG pixyData;
                     refreshCoord();
                     debugChar(0xE0);
-                    while(objectsFound != 4) 
-                    {
-                        pixyData = readBorderData();
-                        //debugChar(0xE2);
-                        unsigned short xtemp;
-                        unsigned short ytemp;
-                        unsigned short widthtemp;
-                        unsigned short heighttemp;
-                        xtemp = (pixyData.xcenter1 << 8) | pixyData.xcenter2;   
-                        ytemp = (pixyData.ycenter1 << 8) | pixyData.ycenter2;   
-                        widthtemp = (pixyData.width1 << 8) | pixyData.width2;   
-                        heighttemp = (pixyData.height1 << 8) | pixyData.height2;   
-                        if(objectsFound == 0)
-                        {
-                            xcoord1 = xtemp;   
-                            ycoord1 = ytemp;
-                            width1 = widthtemp;
-                            height1 = heighttemp;
-                            debugChar(0x91);
-                            debugChar(pixyData.xcenter1);
-                            debugChar(pixyData.xcenter2);
-                            debugChar(pixyData.ycenter1);
-                            debugChar(pixyData.ycenter2);
-                            debugChar(pixyData.width1);
-                            debugChar(pixyData.width2);
-                            debugChar(pixyData.height1);
-                            debugChar(pixyData.height2);
-                            debugChar(0x92);
-                            unsigned char bufferM[10] = {'U',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(200);
-                            objectsFound++;                          
-                        }
-                        else if((objectsFound == 1 ) 
-                                && (coordinates(xtemp,ytemp,xcoord1,ycoord1, width1, height1, widthtemp, heighttemp) == 1))
-                        {
-                            xcoord2 = xtemp;   
-                            ycoord2 = ytemp;
-                            width2 = widthtemp;
-                            height2 = heighttemp;
-                            debugChar(0x93);
-                            debugChar(pixyData.xcenter1);
-                            debugChar(pixyData.xcenter2);
-                            debugChar(pixyData.ycenter1);
-                            debugChar(pixyData.ycenter2);
-                            debugChar(pixyData.width1);
-                            debugChar(pixyData.width2);
-                            debugChar(pixyData.height1);
-                            debugChar(pixyData.height2);
-                            debugChar(0x94);
-                            unsigned char bufferM[10] = {'V',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(200);
-                            objectsFound++;
-                        }
-                        else if((objectsFound == 2 ) 
-                                && (coordinates(xtemp,ytemp,xcoord1,ycoord1, width1, height1, widthtemp, heighttemp) == 1)
-                                && (coordinates(xtemp,ytemp,xcoord2,ycoord2, width2, height2, widthtemp, heighttemp) == 1))
-                        {
-                            xcoord3 = xtemp;   
-                            ycoord3 = ytemp;
-                            width3 = widthtemp;
-                            height3 = heighttemp;
-                            debugChar(0x95);
-                            debugChar(pixyData.xcenter1);
-                            debugChar(pixyData.xcenter2);
-                            debugChar(pixyData.ycenter1);
-                            debugChar(pixyData.ycenter2);
-                            debugChar(pixyData.width1);
-                            debugChar(pixyData.width2);
-                            debugChar(pixyData.height1);
-                            debugChar(pixyData.height2);
-                            debugChar(0x96);
-                            unsigned char bufferM[10] = {'W',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(200);
-                            objectsFound++;
-                        }
-                        else if((objectsFound == 3 ) 
-                            && (coordinates(xtemp,ytemp,xcoord1,ycoord1, width1, height1, widthtemp, heighttemp) == 1)
-                            && (coordinates(xtemp,ytemp,xcoord2,ycoord2, width2, height2, widthtemp, heighttemp) == 1)
-                            && (coordinates(xtemp,ytemp,xcoord3,ycoord3, width3, height3, widthtemp, heighttemp) == 1))
-                        {
-                            xcoord4 = xtemp;   
-                            ycoord4 = ytemp;
-                            width4 = widthtemp;
-                            height4 = heighttemp;
-                            debugChar(0x97);
-                            debugChar(pixyData.xcenter1);
-                            debugChar(pixyData.xcenter2);
-                            debugChar(pixyData.ycenter1);
-                            debugChar(pixyData.ycenter2);
-                            debugChar(pixyData.width1);
-                            debugChar(pixyData.width2);
-                            debugChar(pixyData.height1);
-                            debugChar(pixyData.height2);
-                            debugChar(0x98);
-                            unsigned char bufferM[10] = {'X',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(200);
-                            objectsFound++;
-                        }
-                        else {}
-                    }
+                    pixyData = readBorderAvg();
+                    //debugChar(0xE2);
+                    unsigned short xtemp;
+                    unsigned short ytemp;
+                    unsigned short widthtemp;
+                    unsigned short heighttemp;
+                    xtemp = (pixyData.xcenter1 << 8) | pixyData.xcenter2;   
+                    ytemp = (pixyData.ycenter1 << 8) | pixyData.ycenter2;   
+                    widthtemp = (pixyData.width1 << 8) | pixyData.width2;   
+                    heighttemp = (pixyData.height1 << 8) | pixyData.height2;   
+                    xcorner = xtemp;   
+                    ycorner = ytemp;
+                    widthcorner = widthtemp;
+                    heightcorner = heighttemp;
+                    
+                    debugChar(0x91);
+                    debugChar(pixyData.xcenter1);
+                    debugChar(pixyData.xcenter2);
+                    debugChar(pixyData.ycenter1);
+                    debugChar(pixyData.ycenter2);
+                    debugChar(pixyData.width1);
+                    debugChar(pixyData.width2);
+                    debugChar(pixyData.height1);
+                    debugChar(pixyData.height2);
+                    debugChar(0x92);
+                    
+                    unsigned char bufferM[10] = {'U',pixyData.xcenter1,pixyData.xcenter2,
+                    pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
+                    pixyData.height1,pixyData.height2,0x00};
+                    
+                    sendMsgToWIFLY(bufferM, 10);
+                    vTaskDelay(50);                        
                     counter++;
                     objectsFound = 0;
                 }
                 case 1: // obstacles
                 {
-                    PIXY_DATA pixyData;
+                    PIXY_AVG pixyData;
                     refreshCoord();
                     debugChar(0xE1);
                     while(objectsFound != 4) 
                     {
-                        pixyData = readObstacleData();
+                        pixyData = readObstacleAvg();
                         //debugChar(0xE2);
                         unsigned short xtemp;
                         unsigned short ytemp;
@@ -411,7 +336,7 @@ void PIXY_CALC_Tasks ( void )
                                 pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
                                 pixyData.height1,pixyData.height2,0x00};
                             sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(200);
+                            vTaskDelay(50);
                             objectsFound++;                          
                         }
                         else if((objectsFound == 1 ) 
@@ -435,7 +360,7 @@ void PIXY_CALC_Tasks ( void )
                                 pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
                                 pixyData.height1,pixyData.height2,0x00};
                             sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(200);
+                            vTaskDelay(50);
                             objectsFound++;
                         }
                         else if((objectsFound == 2 ) 
@@ -460,7 +385,7 @@ void PIXY_CALC_Tasks ( void )
                                 pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
                                 pixyData.height1,pixyData.height2,0x00};
                             sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(200);
+                            vTaskDelay(50);
                             objectsFound++;
                         }
                         else if((objectsFound == 3 ) 
@@ -486,7 +411,7 @@ void PIXY_CALC_Tasks ( void )
                                 pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
                                 pixyData.height1,pixyData.height2,0x00};
                             sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(200);
+                            vTaskDelay(50);
                             objectsFound++;
                         }
                         else {}
@@ -498,9 +423,9 @@ void PIXY_CALC_Tasks ( void )
                 case 2: // Lead Rover
                 {
                     debugChar(0xA1);
-                    PIXY_DATA pixyData;
+                    PIXY_AVG pixyData;
                     refreshLead();
-                    pixyData = readLeadFrontData();
+                    pixyData = readLeadFrontAvg();
                     unsigned short xtemp;
                     unsigned short ytemp;
                     unsigned short widthtemp;
@@ -536,163 +461,35 @@ void PIXY_CALC_Tasks ( void )
                             debugChar(pixyData.height1);
                             debugChar(pixyData.height2);
                             debugChar(0x9A);
-                            vTaskDelay(200);
+                            vTaskDelay(50);
                             objectsFound++;
                         }
                          else {
                             debugChar(0x9B);
                          }
                     }
-                    int orient;
-                    orient = orientation(orienttemp);
-                    switch(orient)
+                    
+                    if(orienttemp<0)
                     {
-                        case 1://north
-                        {
-                            debugChar(0x11);
-                            debugChar(0x11);
-                            debugChar(0x11);
-                            debugChar(0x11);
-                            if(orienttemp>=-23 && orienttemp<=0)
-                            {
-                                signed int negorient;
-                                negorient = 0x10000 - orienttemp;
-                                pixyData.orient1 = (negorient >> 8);
-                                pixyData.orient2 = negorient;
-                            }
-                            unsigned char bufferM[10] = {'E',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 2://northwest
-                        {
-                            debugChar(0x22);
-                            debugChar(0x22);
-                            debugChar(0x22);
-                            debugChar(0x22);
-                            signed int negorient;
-                            negorient = 0x10000 - orienttemp;
-                            pixyData.orient1 = (negorient >> 8);
-                            pixyData.orient2 = negorient;
-                            unsigned char bufferM[10] = {'F',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 3://west
-                        {   
-                            debugChar(0x33);
-                            debugChar(0x33);
-                            debugChar(0x33);
-                            debugChar(0x33);
-                            signed int negorient;
-                            negorient = 0x10000 - orienttemp;
-                            pixyData.orient1 = (negorient >> 8);
-                            pixyData.orient2 = negorient;
-                            unsigned char bufferM[10] = {'G',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 4://southwest
-                        {
-                            debugChar(0x44);
-                            debugChar(0x44);
-                            debugChar(0x44);
-                            debugChar(0x44);
-                            signed int negorient;
-                            negorient = 0x10000 - orienttemp;
-                            pixyData.orient1 = (negorient >> 8);
-                            pixyData.orient2 = negorient;
-                            unsigned char bufferM[10] = {'H',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 5://south
-                        {
-                            debugChar(0x55);
-                            debugChar(0x55);
-                            debugChar(0x55);
-                            debugChar(0x55);
-                            if(orienttemp>=-180 && orienttemp<=-135)
-                            {
-                                signed int negorient;
-                                negorient = 0x10000 - orienttemp;
-                                pixyData.orient1 = (negorient >> 8);
-                                pixyData.orient2 = negorient;
-                            }
-                            unsigned char bufferM[10] = {'I',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 6://southeast
-                        {
-                            debugChar(0x66);
-                            debugChar(0x66);
-                            debugChar(0x66);
-                            debugChar(0x66);
-                            unsigned char bufferM[10] = {'J',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 7://east
-                        {
-                            debugChar(0x77);
-                            debugChar(0x77);
-                            debugChar(0x77);
-                            debugChar(0x77);
-                            unsigned char bufferM[10] = {'K',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 8://Northeast
-                        {
-                            debugChar(0x88);
-                            debugChar(0x88);
-                            debugChar(0x88);
-                            debugChar(0x88);
-                            unsigned char bufferM[10] = {'L',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
+                        signed int negorient;
+                        negorient = 0x10000 - orienttemp;
+                        negorient = 360 - negorient;
+                        pixyData.orient1 = (negorient >> 8);
+                        pixyData.orient2 = negorient;
                     }
+                    unsigned char bufferM[10] = {'E',pixyData.xcenter1,pixyData.xcenter2,
+                        pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
+                        pixyData.height1,pixyData.height2,0x00};
+                    sendMsgToWIFLY(bufferM, 10);
+                    counter = 1;
+                    objectsFound = 0;
                     break;
                 }
                 case 3: // Follower Rover
                 {
-                    PIXY_DATA pixyData;
+                    PIXY_AVG pixyData;
                     refreshFollower();
-                    pixyData = readFollowerFrontData();
+                    pixyData = readFollowerFrontAvg();
                     unsigned short xtemp;
                     unsigned short ytemp;
                     unsigned short widthtemp;
@@ -730,150 +527,25 @@ void PIXY_CALC_Tasks ( void )
                         }
                         else{}
                     }
-                    int orient;
-                    orient = orientation(orienttemp);
-                    switch(orient)
+
+                    debugChar(0x11);
+                    debugChar(0x11);
+                    debugChar(0x11);
+                    debugChar(0x11);
+                    if(orienttemp<0)
                     {
-                        case 1://north
-                        {
-                            debugChar(0x11);
-                            debugChar(0x11);
-                            debugChar(0x11);
-                            debugChar(0x11);
-                            if(orienttemp>=-23 && orienttemp<=0)
-                            {
-                                signed int negorient;
-                                negorient = 0x10000 - orienttemp;
-                                pixyData.orient1 = (negorient >> 8);
-                                pixyData.orient2 = negorient;
-                            }
-                            unsigned char bufferM[10] = {'M',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 2://northwest
-                        {
-                            debugChar(0x22);
-                            debugChar(0x22);
-                            debugChar(0x22);
-                            debugChar(0x22);
-                            signed int negorient;
-                            negorient = 0x10000 - orienttemp;
-                            pixyData.orient1 = (negorient >> 8);
-                            pixyData.orient2 = negorient;
-                            unsigned char bufferM[10] = {'N',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 3://west
-                        {   
-                            debugChar(0x33);
-                            debugChar(0x33);
-                            debugChar(0x33);
-                            debugChar(0x33);
-                            signed int negorient;
-                            negorient = 0x10000 - orienttemp;
-                            pixyData.orient1 = (negorient >> 8);
-                            pixyData.orient2 = negorient;
-                            unsigned char bufferM[10] = {'O',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 4://southwest
-                        {
-                            debugChar(0x44);
-                            debugChar(0x44);
-                            debugChar(0x44);
-                            debugChar(0x44);
-                            signed int negorient;
-                            negorient = 0x10000 - orienttemp;
-                            pixyData.orient1 = (negorient >> 8);
-                            pixyData.orient2 = negorient;
-                            unsigned char bufferM[10] = {'P',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 5://south
-                        {
-                            debugChar(0x55);
-                            debugChar(0x55);
-                            debugChar(0x55);
-                            debugChar(0x55);
-                            if(orienttemp>=-180 && orienttemp<=-135)
-                            {
-                                signed int negorient;
-                                negorient = 0x10000 - orienttemp;
-                                pixyData.orient1 = (negorient >> 8);
-                                pixyData.orient2 = negorient;
-                            }
-                            unsigned char bufferM[10] = {'Q',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 6://southeast
-                        {
-                            debugChar(0x66);
-                            debugChar(0x66);
-                            debugChar(0x66);
-                            debugChar(0x66);
-                            unsigned char bufferM[10] = {'R',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 7://east
-                        {
-                            debugChar(0x77);
-                            debugChar(0x77);
-                            debugChar(0x77);
-                            debugChar(0x77);
-                            unsigned char bufferM[10] = {'S',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
-                        case 8://northeast
-                        {
-                            debugChar(0x88);
-                            debugChar(0x88);
-                            debugChar(0x88);
-                            debugChar(0x88);
-                            unsigned char bufferM[10] = {'T',pixyData.xcenter1,pixyData.xcenter2,
-                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
-                            sendMsgToWIFLY(bufferM, 10);
-                            counter++;
-                            objectsFound = 0;
-                            break;
-                        }
+                        signed int negorient;
+                        negorient = 0x10000 - orienttemp;
+                        negorient = 360 - negorient;
+                        pixyData.orient1 = (negorient >> 8);
+                        pixyData.orient2 = negorient;
                     }
-                    
+                    unsigned char bufferM[10] = {'F',pixyData.xcenter1,pixyData.xcenter2,
+                        pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
+                        pixyData.height1,pixyData.height2,0x00};
+                    sendMsgToWIFLY(bufferM, 10);
+                    counter++;
+                    objectsFound = 0;
                     break;
                 }
                 case 4:

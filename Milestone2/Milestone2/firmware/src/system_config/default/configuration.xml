@@ -145,18 +145,13 @@
     </Files>
     <Templates>
       <Template>
+        <Name>pixy_avg.h</Name>
+        <Path>Header Files/app</Path>
+      </Template>
+      <Template>
         <Name>sys_ports_static.c</Name>
         <Path>Source Files/app/system_config/default/framework/system/ports/src</Path>
         <Checksum>EA425DBB02818CEF28D6D454B7F2C73B</Checksum>
-      </Template>
-      <Template>
-        <Name>system_init.c</Name>
-        <Path>Source Files/app/system_config/default</Path>
-        <Checksum>1FA2E97584CBB50D2B3E4D118EA9BFEB</Checksum>
-      </Template>
-      <Template>
-        <Name>main.c</Name>
-        <Path>Source Files/app</Path>
       </Template>
       <Template>
         <Name>system_interrupt_a.S</Name>
@@ -164,29 +159,11 @@
         <Checksum>12ABD3B8984693E74326CA77853775A8</Checksum>
       </Template>
       <Template>
-        <Name>system_definitions.h</Name>
-        <Path>Header Files/app/system_config/default</Path>
-        <Checksum>00F332DBD342383DDF6A301C89BC0B73</Checksum>
-      </Template>
-      <Template>
-        <Name>system_exceptions.c</Name>
-        <Path>Source Files/app/system_config/default</Path>
-        <Checksum>C111969CA43D6CEA1E9E33A6164E7AE0</Checksum>
-      </Template>
-      <Template>
-        <Name>app.c</Name>
+        <Name>pixy_avg.c</Name>
         <Path>Source Files/app</Path>
       </Template>
       <Template>
         <Name>pixy_calc.h</Name>
-        <Path>Header Files/app</Path>
-      </Template>
-      <Template>
-        <Name>messaging_task.c</Name>
-        <Path>Source Files/app</Path>
-      </Template>
-      <Template>
-        <Name>messaging_task.h</Name>
         <Path>Header Files/app</Path>
       </Template>
       <Template>
@@ -199,16 +176,7 @@
         <Path>Header Files/app</Path>
       </Template>
       <Template>
-        <Name>drv_usart_static.h</Name>
-        <Path>Header Files/app/system_config/default/framework/driver/usart</Path>
-        <Checksum>78816446BC37CA452E12C9F1F3586B2C</Checksum>
-      </Template>
-      <Template>
         <Name>debugging_task.c</Name>
-        <Path>Source Files/app</Path>
-      </Template>
-      <Template>
-        <Name>pixy_calc.c</Name>
         <Path>Source Files/app</Path>
       </Template>
       <Template>
@@ -217,9 +185,64 @@
         <Checksum>8A13F8C1D1B81346AD5B7407DB74B3DF</Checksum>
       </Template>
       <Template>
+        <Name>sys_clk_static.h</Name>
+        <Path>Header Files/app/system_config/default/framework/system/clk</Path>
+        <Checksum>999179DADE9ECD59953526F5E9F83ACC</Checksum>
+      </Template>
+      <Template>
+        <Name>system_interrupt.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>71152892902A7505F096840987E48060</Checksum>
+      </Template>
+      <Template>
+        <Name>sys_clk_static.c</Name>
+        <Path>Source Files/app/system_config/default/framework/system/clk/src</Path>
+        <Checksum>1B968DA82B5DD869A6119C3B7628D753</Checksum>
+      </Template>
+      <Template>
+        <Name>system_init.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>E073AF0F81F275C0D4047F42451AC658</Checksum>
+      </Template>
+      <Template>
+        <Name>main.c</Name>
+        <Path>Source Files/app</Path>
+      </Template>
+      <Template>
+        <Name>system_definitions.h</Name>
+        <Path>Header Files/app/system_config/default</Path>
+        <Checksum>1F34DB17B77FC9954C3484F438A5C922</Checksum>
+      </Template>
+      <Template>
+        <Name>system_exceptions.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>C111969CA43D6CEA1E9E33A6164E7AE0</Checksum>
+      </Template>
+      <Template>
+        <Name>app.c</Name>
+        <Path>Source Files/app</Path>
+      </Template>
+      <Template>
+        <Name>messaging_task.c</Name>
+        <Path>Source Files/app</Path>
+      </Template>
+      <Template>
+        <Name>messaging_task.h</Name>
+        <Path>Header Files/app</Path>
+      </Template>
+      <Template>
+        <Name>drv_usart_static.h</Name>
+        <Path>Header Files/app/system_config/default/framework/driver/usart</Path>
+        <Checksum>78816446BC37CA452E12C9F1F3586B2C</Checksum>
+      </Template>
+      <Template>
+        <Name>pixy_calc.c</Name>
+        <Path>Source Files/app</Path>
+      </Template>
+      <Template>
         <Name>system_tasks.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>1D7A7B19864928FC6E0E9544FFC199B2</Checksum>
+        <Checksum>CAFA7BA440B0498EE78FC2BBBF2A4458</Checksum>
       </Template>
       <Template>
         <Name>system_config.h</Name>
@@ -231,24 +254,9 @@
         <Path>Header Files/app</Path>
       </Template>
       <Template>
-        <Name>sys_clk_static.h</Name>
-        <Path>Header Files/app/system_config/default/framework/system/clk</Path>
-        <Checksum>999179DADE9ECD59953526F5E9F83ACC</Checksum>
-      </Template>
-      <Template>
-        <Name>system_interrupt.c</Name>
-        <Path>Source Files/app/system_config/default</Path>
-        <Checksum>ECEDEDD31D3619AF766D02840845BFC0</Checksum>
-      </Template>
-      <Template>
         <Name>rtos_hooks.c</Name>
         <Path>Source Files/app/system_config/default</Path>
         <Checksum>FA52743264536E5207D2ADBE57B48D05</Checksum>
-      </Template>
-      <Template>
-        <Name>sys_clk_static.c</Name>
-        <Path>Source Files/app/system_config/default/framework/system/clk/src</Path>
-        <Checksum>1B968DA82B5DD869A6119C3B7628D753</Checksum>
       </Template>
     </Templates>
     <CompilerItems>

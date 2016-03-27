@@ -58,6 +58,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "debugging_task.h"
 #include "messaging_task.h"
 #include "pixy_calc.h"
+#include "pixy_avg.h"
 
 
 // *****************************************************************************
@@ -71,6 +72,7 @@ static void _APP_Tasks(void);
 static void _DEBUGGING_TASK_Tasks(void);
 static void _MESSAGING_TASK_Tasks(void);
 static void _PIXY_CALC_Tasks(void);
+static void _PIXY_AVG_Tasks(void);
 
 
 // *****************************************************************************
@@ -112,6 +114,11 @@ void SYS_Tasks ( void )
     /* Create OS Thread for PIXY_CALC Tasks. */
     xTaskCreate((TaskFunction_t) _PIXY_CALC_Tasks,
                 "PIXY_CALC Tasks",
+                1024, NULL, 1, NULL);
+
+    /* Create OS Thread for PIXY_AVG Tasks. */
+    xTaskCreate((TaskFunction_t) _PIXY_AVG_Tasks,
+                "PIXY_AVG Tasks",
                 1024, NULL, 1, NULL);
 
     /**************
@@ -209,6 +216,23 @@ static void _PIXY_CALC_Tasks(void)
     while(1)
     {
         PIXY_CALC_Tasks();
+    }
+}
+
+
+/*******************************************************************************
+  Function:
+    void _PIXY_AVG_Tasks ( void )
+
+  Summary:
+    Maintains state machine of PIXY_AVG.
+*/
+
+static void _PIXY_AVG_Tasks(void)
+{
+    while(1)
+    {
+        PIXY_AVG_Tasks();
     }
 }
 

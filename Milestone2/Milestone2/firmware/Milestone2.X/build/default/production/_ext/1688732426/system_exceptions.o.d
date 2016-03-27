@@ -157,4 +157,7 @@ build/default/production/_ext/1688732426/system_exceptions.o:  \
 ../src/debugging_task.h  \
  ../src/messaging_task.h  \
 ../src/pixy_calc.h  \
+../src/pixy_avg.h  \
+ ../src/app_public.h  \
+../src/pixy_avg_public.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/debug/sys_debug.h 

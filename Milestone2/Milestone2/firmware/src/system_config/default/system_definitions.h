@@ -68,6 +68,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "debugging_task.h"
 #include "messaging_task.h"
 #include "pixy_calc.h"
+#include "pixy_avg.h"
 
 
 // DOM-IGNORE-BEGIN

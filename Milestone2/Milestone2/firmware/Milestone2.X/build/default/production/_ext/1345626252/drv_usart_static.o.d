@@ -154,4 +154,7 @@ build/default/production/_ext/1345626252/drv_usart_static.o:  \
  ../src/debugging_task_public.h  \
 ../src/debugging_task.h  \
  ../src/messaging_task.h  \
-../src/pixy_calc.h 
+../src/pixy_calc.h  \
+../src/pixy_avg.h  \
+ ../src/app_public.h  \
+../src/pixy_avg_public.h 

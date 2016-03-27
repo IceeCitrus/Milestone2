@@ -1,11 +1,11 @@
-build/default/production/_ext/1688732426/system_tasks.o:  \
- ../src/system_config/default/system_tasks.c  \
- ../src/system_config/default/system_config.h  \
+build/default/production/_ext/1360937237/pixy_avg.o:  \
+../src/pixy_avg.c  \
+ ../src/pixy_avg.h  \
+../src/system_config/default/system_config.h  \
  ../src/system_config/default/system_definitions.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/common/sys_common.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/common/sys_module.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/clk/sys_clk.h  \
- ../src/system_config/default/system_config.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/osc/plib_osc.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/osc/processor/osc_processor.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/peripheral/osc/processor/osc_p32xxxx.h  \
@@ -149,7 +149,6 @@ build/default/production/_ext/1688732426/system_tasks.o:  \
  ../../../../../../../../../microchip/harmony/v1_06_02/third_party/rtos/FreeRTOS/Source/include/task.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/third_party/rtos/FreeRTOS/Source/include/list.h  \
  ../src/app.h  \
-../src/system_config/default/system_definitions.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/third_party/rtos/FreeRTOS/Source/include/queue.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/third_party/rtos/FreeRTOS/Source/include/timers.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/third_party/rtos/FreeRTOS/Source/include/task.h  \

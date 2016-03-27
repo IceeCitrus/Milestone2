@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    pixy_calc.h
+    pixy_avg.h
 
   Summary:
     This header file provides prototypes and definitions for the application.
@@ -43,8 +43,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _PIXY_CALC_H
-#define _PIXY_CALC_H
+#ifndef _PIXY_AVG_H
+#define _PIXY_AVG_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -59,6 +59,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system_config.h"
 #include "system_definitions.h"
 
+#include "app_public.h"
+#include "pixy_avg_public.h"
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
@@ -84,18 +86,14 @@ extern "C" {
     determine the behavior of the application at various times.
 */
 
-    int objectsFound;
-    int counter;
-    
 typedef enum
 {
 	/* Application's state machine's initial state. */
-	PIXY_CALC_STATE_INIT=0,
-
-    PIXY_CALC_STATE_CALC=1,
+	PIXY_AVG_STATE_INIT=0,
+          
 	/* TODO: Define states used by the application state machine. */
-
-} PIXY_CALC_STATES;
+    PIXY_AVG_STATE_CALC=1,
+} PIXY_AVG_STATES;
 
 
 // *****************************************************************************
@@ -114,15 +112,18 @@ typedef enum
 typedef struct
 {
     /* The application's current state */
-    PIXY_CALC_STATES state;
+    PIXY_AVG_STATES state;
 
     /* TODO: Define any additional data used by the application. */
-} PIXY_CALC_DATA;
-    unsigned short xcorner, ycorner, heightcorner, widthcorner;
-    unsigned short xcoord1, xcoord2, xcoord3, xcoord4, width1, width2, width3, width4;
-    unsigned short ycoord1, ycoord2, ycoord3, ycoord4, height1, height2, height3, height4;
-    unsigned short xlead, xfollower, widthlead, widthfollower;
-    unsigned short ylead, yfollower, heightlead, heightfollower;
+    QueueHandle_t pixy_q;
+    QueueHandle_t obstacle_q;
+    QueueHandle_t leadFront_q;
+    QueueHandle_t leadBack_q;
+    QueueHandle_t followerFront_q;
+    QueueHandle_t followerBack_q;
+    QueueHandle_t border_q;
+} PIXY_AVG_DATA;
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -141,7 +142,7 @@ typedef struct
 
 /*******************************************************************************
   Function:
-    void PIXY_CALC_Initialize ( void )
+    void PIXY_AVG_Initialize ( void )
 
   Summary:
      MPLAB Harmony application initialization routine.
@@ -163,25 +164,19 @@ typedef struct
 
   Example:
     <code>
-    PIXY_CALC_Initialize();
+    PIXY_AVG_Initialize();
     </code>
 
   Remarks:
     This routine must be called from the SYS_Initialize function.
 */
 
-void PIXY_CALC_Initialize ( void );
+void PIXY_AVG_Initialize ( void );
 
-void refreshCoord();
-void refreshLead();
-void refreshFollower();
-int coordinates(unsigned short x, unsigned short y, unsigned short xtemp, 
-        unsigned short ytemp, unsigned short width, unsigned short height,
-        unsigned short widthtemp, unsigned short heighttemp);
-int orientation(short orient);
+
 /*******************************************************************************
   Function:
-    void PIXY_CALC_Tasks ( void )
+    void PIXY_AVG_Tasks ( void )
 
   Summary:
     MPLAB Harmony Demo application tasks function
@@ -202,17 +197,25 @@ int orientation(short orient);
 
   Example:
     <code>
-    PIXY_CALC_Tasks();
+    PIXY_AVG_Tasks();
     </code>
 
   Remarks:
     This routine must be called from SYS_Tasks() routine.
  */
+int objectsFound;
+unsigned short xcoord1, xcoord2, xcoord3, xcoord4, width1, width2, width3, width4;
+unsigned short ycoord1, ycoord2, ycoord3, ycoord4, height1, height2, height3, height4;
+unsigned short orient1, orient2, orient3, orient4;
+void refreshAvg();
+void PIXY_AVG_Tasks( void );
 
-void PIXY_CALC_Tasks( void );
+void obstacleAvg();
+void leadFrontAvg();
+void followerFrontAvg();
+void borderAvg();
 
-
-#endif /* _PIXY_CALC_H */
+#endif /* _PIXY_AVG_H */
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

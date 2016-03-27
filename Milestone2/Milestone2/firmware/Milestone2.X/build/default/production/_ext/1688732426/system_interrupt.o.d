@@ -155,4 +155,7 @@ build/default/production/_ext/1688732426/system_interrupt.o:  \
  ../src/debugging_task_public.h  \
 ../src/messaging_task.h  \
  ../src/pixy_calc.h  \
-../src/system_config/default/system_definitions.h 
+../src/pixy_avg.h  \
+../src/app_public.h  \
+ ../src/pixy_avg_public.h  \
+ ../src/system_config/default/system_definitions.h 

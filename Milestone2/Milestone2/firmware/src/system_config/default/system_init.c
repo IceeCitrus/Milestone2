@@ -194,6 +194,7 @@ void SYS_Initialize ( void* data )
     DEBUGGING_TASK_Initialize();
     MESSAGING_TASK_Initialize();
     PIXY_CALC_Initialize();
+    PIXY_AVG_Initialize();
 }
 
 
