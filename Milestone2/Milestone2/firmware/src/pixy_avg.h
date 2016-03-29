@@ -92,7 +92,8 @@ typedef enum
 	PIXY_AVG_STATE_INIT=0,
           
 	/* TODO: Define states used by the application state machine. */
-    PIXY_AVG_STATE_CALC=1,
+    PIXY_AVG_STATE_LEAD=1,
+    PIXY_AVG_STATE_FOLLOWER=2,
 } PIXY_AVG_STATES;
 
 
@@ -118,9 +119,7 @@ typedef struct
     QueueHandle_t pixy_q;
     QueueHandle_t obstacle_q;
     QueueHandle_t leadFront_q;
-    QueueHandle_t leadBack_q;
     QueueHandle_t followerFront_q;
-    QueueHandle_t followerBack_q;
     QueueHandle_t border_q;
 } PIXY_AVG_DATA;
 
@@ -203,10 +202,10 @@ void PIXY_AVG_Initialize ( void );
   Remarks:
     This routine must be called from SYS_Tasks() routine.
  */
-int objectsFound;
+int objects;
 unsigned short xcoord1, xcoord2, xcoord3, xcoord4, width1, width2, width3, width4;
 unsigned short ycoord1, ycoord2, ycoord3, ycoord4, height1, height2, height3, height4;
-unsigned short orient1, orient2, orient3, orient4;
+short orient1, orient2, orient3, orient4;
 void refreshAvg();
 void PIXY_AVG_Tasks( void );
 

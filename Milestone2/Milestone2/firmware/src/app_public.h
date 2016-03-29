@@ -75,10 +75,10 @@ extern "C" {
         unsigned char width2;        
         unsigned char height1;
         unsigned char height2;
-        char orient1;
-        char orient2;
+        short orient1;
+        short orient2;
     } PIXY_DATA;
-    
+    int finishObstacle;
     int sensor1SendTimerValToMsgQ(unsigned int millisecondsElapsed);
     
     void sensor1SendSensorValToSensorQ(unsigned char sensorValue);

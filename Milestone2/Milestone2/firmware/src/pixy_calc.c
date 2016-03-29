@@ -154,52 +154,7 @@ int coordinates(unsigned short xtemp, unsigned short ytemp, unsigned short x,
         return 0;
     }
 }
-int orientation(short orient)
-{
-    //Facing north
-    if((orient>-23)&&(orient<=23))
-    {
-        return 1;
-    }
-    //Facing northeast
-    else if((orient>23)&&(orient<=67))
-    {
-        return 8;
-    }
-    //Facing east
-    else if((orient>67)&&(orient<=113))
-    {
-        return 7;
-    }
-    //Facing southeast
-    else if((orient>113)&&(orient<=157))
-    {
-        return 6;
-    }
-    //Facing south
-    else if((orient>157)&&(orient<=-157))
-    {
-        return 5;
-    }
-    //Facing southwest
-    else if((orient>-157)&&(orient<=-113))
-    {
-        return 4;
-    }
-    //Facing west
-    else if((orient>-117)&&(orient<=-67))
-    {
-        return 3;
-    }
-    //Facing northwest
-    else if((orient>-67)&&(orient<=-23))
-    {
-        return 2;
-    }
-    else{
-        debugChar(0xEF);
-    }
-}
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -219,7 +174,7 @@ void PIXY_CALC_Initialize ( void )
     /* Place the App state machine in its initial state. */
     pixy_calcData.state = PIXY_CALC_STATE_INIT;
     
-    counter = 1;
+    counter = 2;
     xcorner = 0;
     ycorner = 0;
     widthcorner = 0;
@@ -260,12 +215,12 @@ void PIXY_CALC_Tasks ( void )
             switch(counter) 
             {
                 case 0: // border1
-                {
-                    PIXY_AVG pixyData;
+                {/*
+                    PIXY_DATA pixyData;
                     refreshCoord();
                     debugChar(0xE0);
-                    pixyData = readBorderAvg();
-                    //debugChar(0xE2);
+                    pixyData = readBorderData();
+                    debugChar(0xE2);
                     unsigned short xtemp;
                     unsigned short ytemp;
                     unsigned short widthtemp;
@@ -297,17 +252,18 @@ void PIXY_CALC_Tasks ( void )
                     sendMsgToWIFLY(bufferM, 10);
                     vTaskDelay(50);                        
                     counter++;
-                    objectsFound = 0;
+                    objectsFound = 0;*/
+                    break;
                 }
                 case 1: // obstacles
                 {
-                    PIXY_AVG pixyData;
+                    PIXY_DATA pixyData;
                     refreshCoord();
                     debugChar(0xE1);
                     while(objectsFound != 4) 
                     {
-                        pixyData = readObstacleAvg();
-                        //debugChar(0xE2);
+                        pixyData = readObstacleData();
+                        debugChar(0xE2);
                         unsigned short xtemp;
                         unsigned short ytemp;
                         unsigned short widthtemp;
@@ -323,20 +279,20 @@ void PIXY_CALC_Tasks ( void )
                             width1 = widthtemp;
                             height1 = heighttemp;
                             debugChar(0x91);
-                            debugChar(pixyData.xcenter1);
+                            /*debugChar(pixyData.xcenter1);
                             debugChar(pixyData.xcenter2);
                             debugChar(pixyData.ycenter1);
                             debugChar(pixyData.ycenter2);
                             debugChar(pixyData.width1);
                             debugChar(pixyData.width2);
                             debugChar(pixyData.height1);
-                            debugChar(pixyData.height2);
+                            debugChar(pixyData.height2);*/
                             debugChar(0x92);
                             unsigned char bufferM[10] = {'A',pixyData.xcenter1,pixyData.xcenter2,
                                 pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
                                 pixyData.height1,pixyData.height2,0x00};
                             sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(50);
+                            vTaskDelay(200);
                             objectsFound++;                          
                         }
                         else if((objectsFound == 1 ) 
@@ -347,20 +303,20 @@ void PIXY_CALC_Tasks ( void )
                             width2 = widthtemp;
                             height2 = heighttemp;
                             debugChar(0x93);
-                            debugChar(pixyData.xcenter1);
+                            /*debugChar(pixyData.xcenter1);
                             debugChar(pixyData.xcenter2);
                             debugChar(pixyData.ycenter1);
                             debugChar(pixyData.ycenter2);
                             debugChar(pixyData.width1);
                             debugChar(pixyData.width2);
                             debugChar(pixyData.height1);
-                            debugChar(pixyData.height2);
+                            debugChar(pixyData.height2);*/
                             debugChar(0x94);
                             unsigned char bufferM[10] = {'B',pixyData.xcenter1,pixyData.xcenter2,
                                 pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
                                 pixyData.height1,pixyData.height2,0x00};
                             sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(50);
+                            vTaskDelay(200);
                             objectsFound++;
                         }
                         else if((objectsFound == 2 ) 
@@ -372,20 +328,20 @@ void PIXY_CALC_Tasks ( void )
                             width3 = widthtemp;
                             height3 = heighttemp;
                             debugChar(0x95);
-                            debugChar(pixyData.xcenter1);
+                            /*debugChar(pixyData.xcenter1);
                             debugChar(pixyData.xcenter2);
                             debugChar(pixyData.ycenter1);
                             debugChar(pixyData.ycenter2);
                             debugChar(pixyData.width1);
                             debugChar(pixyData.width2);
                             debugChar(pixyData.height1);
-                            debugChar(pixyData.height2);
+                            debugChar(pixyData.height2);*/
                             debugChar(0x96);
                             unsigned char bufferM[10] = {'C',pixyData.xcenter1,pixyData.xcenter2,
                                 pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
                                 pixyData.height1,pixyData.height2,0x00};
                             sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(50);
+                            vTaskDelay(200);
                             objectsFound++;
                         }
                         else if((objectsFound == 3 ) 
@@ -398,39 +354,42 @@ void PIXY_CALC_Tasks ( void )
                             width4 = widthtemp;
                             height4 = heighttemp;
                             debugChar(0x97);
-                            debugChar(pixyData.xcenter1);
+                            /*debugChar(pixyData.xcenter1);
                             debugChar(pixyData.xcenter2);
                             debugChar(pixyData.ycenter1);
                             debugChar(pixyData.ycenter2);
                             debugChar(pixyData.width1);
                             debugChar(pixyData.width2);
                             debugChar(pixyData.height1);
-                            debugChar(pixyData.height2);
+                            debugChar(pixyData.height2);*/
                             debugChar(0x98);
                             unsigned char bufferM[10] = {'D',pixyData.xcenter1,pixyData.xcenter2,
                                 pixyData.ycenter1,pixyData.ycenter2,pixyData.width1,pixyData.width2,
                                 pixyData.height1,pixyData.height2,0x00};
                             sendMsgToWIFLY(bufferM, 10);
-                            vTaskDelay(50);
+                            vTaskDelay(200);
                             objectsFound++;
                         }
                         else {}
                     }
-                    counter++;
+                    finishObstacle = 5; // Tell the sensor to stop storing obstacle values
                     objectsFound = 0;
+                    counter++;
                     break;
                 }
                 case 2: // Lead Rover
                 {
-                    debugChar(0xA1);
+                    finishObstacle = 5; // Tell the sensor to stop storing obstacle values
+                    //debugChar(0xA1);
                     PIXY_AVG pixyData;
                     refreshLead();
                     pixyData = readLeadFrontAvg();
+                    //debugChar(0xA2);
                     unsigned short xtemp;
                     unsigned short ytemp;
                     unsigned short widthtemp;
                     unsigned short heighttemp;
-                    short orienttemp;
+                    unsigned short orienttemp;
                     xtemp = (pixyData.xcenter1 << 8) | pixyData.xcenter2;   
                     ytemp = (pixyData.ycenter1 << 8) | pixyData.ycenter2;
                     widthtemp = (pixyData.width1 << 8) | pixyData.width2;   
@@ -439,36 +398,31 @@ void PIXY_CALC_Tasks ( void )
                     debugChar(0xA2);
                     debugChar(pixyData.orient1);
                     debugChar(pixyData.orient2);
-                    while(objectsFound != 1) 
-                    {
-                        if((coordinates(xtemp,ytemp,xcoord1,ycoord1, width1, height1, widthtemp, heighttemp) == 1)
-                            && (coordinates(xtemp,ytemp,xcoord2,ycoord2, width2, height2, widthtemp, heighttemp) == 1)
-                            && (coordinates(xtemp,ytemp,xcoord3,ycoord3, width3, height3, widthtemp, heighttemp) == 1)
-                            && (coordinates(xtemp,ytemp,xcoord4,ycoord4, width4, height4, widthtemp, heighttemp) == 1)
-                            && (coordinates(xtemp,ytemp,xfollower,yfollower, widthfollower, heightfollower, widthtemp, heighttemp) == 1))
-                        {
-                            xlead = xtemp;   
-                            ylead = ytemp;
-                            widthlead = widthtemp;
-                            heightlead = heighttemp;
-                            debugChar(0x99);
-                            debugChar(pixyData.xcenter1);
-                            debugChar(pixyData.xcenter2);
-                            debugChar(pixyData.ycenter1);
-                            debugChar(pixyData.ycenter2);
-                            debugChar(pixyData.width1);
-                            debugChar(pixyData.width2);
-                            debugChar(pixyData.height1);
-                            debugChar(pixyData.height2);
-                            debugChar(0x9A);
-                            vTaskDelay(50);
-                            objectsFound++;
-                        }
-                         else {
-                            debugChar(0x9B);
-                         }
-                    }
-                    
+                    //if((coordinates(xtemp,ytemp,xcoord1,ycoord1, width1, height1, widthtemp, heighttemp) == 1)
+                    //    && (coordinates(xtemp,ytemp,xcoord2,ycoord2, width2, height2, widthtemp, heighttemp) == 1)
+                    //    && (coordinates(xtemp,ytemp,xcoord3,ycoord3, width3, height3, widthtemp, heighttemp) == 1)
+                    //    && (coordinates(xtemp,ytemp,xcoord4,ycoord4, width4, height4, widthtemp, heighttemp) == 1)
+                    //    && (coordinates(xtemp,ytemp,xfollower,yfollower, widthfollower, heightfollower, widthtemp, heighttemp) == 1))
+                    //{
+                        xlead = xtemp;   
+                        ylead = ytemp;
+                        widthlead = widthtemp;
+                        heightlead = heighttemp;
+                        debugChar(0x99);
+                        /*debugChar(pixyData.xcenter1);
+                        debugChar(pixyData.xcenter2);
+                        debugChar(pixyData.ycenter1);
+                        debugChar(pixyData.ycenter2);
+                        debugChar(pixyData.width1);
+                        debugChar(pixyData.width2);
+                        debugChar(pixyData.height1);
+                        debugChar(pixyData.height2);*/
+                        //debugChar(0x9A);
+                        objectsFound++;
+                    //}
+                    // else {
+                    //    debugChar(0x9B);
+                    // }
                     if(orienttemp<0)
                     {
                         signed int negorient;
@@ -476,62 +430,70 @@ void PIXY_CALC_Tasks ( void )
                         negorient = 360 - negorient;
                         pixyData.orient1 = (negorient >> 8);
                         pixyData.orient2 = negorient;
+                        debugChar(0x77);
+                        debugChar(pixyData.orient1);
+                        debugChar(pixyData.orient2);
+                        debugChar(0x77);
                     }
                     unsigned char bufferM[10] = {'E',pixyData.xcenter1,pixyData.xcenter2,
                         pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
                         pixyData.height1,pixyData.height2,0x00};
                     sendMsgToWIFLY(bufferM, 10);
-                    counter = 1;
-                    objectsFound = 0;
+                    if(objectsFound == 1) 
+                    {
+                        objectsFound = 0;
+                    }
+                    vTaskDelay(200);
+                    
+                    counter = 3;
                     break;
                 }
                 case 3: // Follower Rover
                 {
+                    finishObstacle = 5; // Tell the sensor to stop storing obstacle values
+                    //debugChar(0xA1);
                     PIXY_AVG pixyData;
                     refreshFollower();
                     pixyData = readFollowerFrontAvg();
+                    //debugChar(0xA2);
                     unsigned short xtemp;
                     unsigned short ytemp;
                     unsigned short widthtemp;
                     unsigned short heighttemp;
-                    short orienttemp;
+                    unsigned short orienttemp;
                     xtemp = (pixyData.xcenter1 << 8) | pixyData.xcenter2;   
                     ytemp = (pixyData.ycenter1 << 8) | pixyData.ycenter2;
                     widthtemp = (pixyData.width1 << 8) | pixyData.width2;   
-                    heighttemp = (pixyData.height1 << 8) | pixyData.height2;  
-                    orienttemp = (pixyData.orient1 << 8) | pixyData.orient2;
-                    while(objectsFound != 1) 
-                    {
-                        if((coordinates(xtemp,ytemp,xcoord1,ycoord1, width1, height1, widthtemp, heighttemp) == 1)
-                            && (coordinates(xtemp,ytemp,xcoord2,ycoord2, width2, height2, widthtemp, heighttemp) == 1)
-                            && (coordinates(xtemp,ytemp,xcoord3,ycoord3, width3, height3, widthtemp, heighttemp) == 1)
-                            && (coordinates(xtemp,ytemp,xcoord4,ycoord4, width4, height4, widthtemp, heighttemp) == 1)
-                            && (coordinates(xtemp,ytemp,xlead,ylead, widthlead, heightlead, widthtemp, heighttemp) == 1))
-                        {
-                            xfollower = xtemp;   
-                            yfollower = ytemp;
-                            widthfollower = widthtemp;
-                            heightfollower = heighttemp;
-                            debugChar(0x9B);
-                            debugChar(pixyData.xcenter1);
-                            debugChar(pixyData.xcenter2);
-                            debugChar(pixyData.ycenter1);
-                            debugChar(pixyData.ycenter2);
-                            debugChar(pixyData.width1);
-                            debugChar(pixyData.width2);
-                            debugChar(pixyData.height1);
-                            debugChar(pixyData.height2);
-                            debugChar(0x9C);
-                            vTaskDelay(200);
-                            objectsFound++;
-                        }
-                        else{}
-                    }
-
-                    debugChar(0x11);
-                    debugChar(0x11);
-                    debugChar(0x11);
-                    debugChar(0x11);
+                    heighttemp = (pixyData.height1 << 8) | pixyData.height2;   
+                    orienttemp = (pixyData.orient1 << 8) | pixyData.orient2;   
+                    debugChar(0xB2);
+                    debugChar(pixyData.orient1);
+                    debugChar(pixyData.orient2);
+                    //if((coordinates(xtemp,ytemp,xcoord1,ycoord1, width1, height1, widthtemp, heighttemp) == 1)
+                    //    && (coordinates(xtemp,ytemp,xcoord2,ycoord2, width2, height2, widthtemp, heighttemp) == 1)
+                    //    && (coordinates(xtemp,ytemp,xcoord3,ycoord3, width3, height3, widthtemp, heighttemp) == 1)
+                    //    && (coordinates(xtemp,ytemp,xcoord4,ycoord4, width4, height4, widthtemp, heighttemp) == 1)
+                    //    && (coordinates(xtemp,ytemp,xfollower,yfollower, widthfollower, heightfollower, widthtemp, heighttemp) == 1))
+                    //{
+                        xfollower = xtemp;   
+                        yfollower = ytemp;
+                        widthfollower = widthtemp;
+                        heightfollower = heighttemp;
+                        debugChar(0xB9);
+                        /*debugChar(pixyData.xcenter1);
+                        debugChar(pixyData.xcenter2);
+                        debugChar(pixyData.ycenter1);
+                        debugChar(pixyData.ycenter2);
+                        debugChar(pixyData.width1);
+                        debugChar(pixyData.width2);
+                        debugChar(pixyData.height1);
+                        debugChar(pixyData.height2);*/
+                        //debugChar(0x9A);
+                        objectsFound++;
+                    //}
+                    // else {
+                    //    debugChar(0x9B);
+                    // }
                     if(orienttemp<0)
                     {
                         signed int negorient;
@@ -539,18 +501,27 @@ void PIXY_CALC_Tasks ( void )
                         negorient = 360 - negorient;
                         pixyData.orient1 = (negorient >> 8);
                         pixyData.orient2 = negorient;
+                        //debugChar(0x77);
+                        //debugChar(pixyData.orient1);
+                        //debugChar(pixyData.orient2);
+                        //debugChar(0x77);
                     }
                     unsigned char bufferM[10] = {'F',pixyData.xcenter1,pixyData.xcenter2,
                         pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
                         pixyData.height1,pixyData.height2,0x00};
                     sendMsgToWIFLY(bufferM, 10);
-                    counter++;
-                    objectsFound = 0;
+                    if(objectsFound == 1) 
+                    {
+                        objectsFound = 0;
+                    }
+                    vTaskDelay(200);
+                    
+                    counter = 4;
                     break;
                 }
                 case 4:
                 {   
-                    counter = 1;
+                    counter = 2;
                     objectsFound = 0;
                     debugChar(0xAF);
                     break;

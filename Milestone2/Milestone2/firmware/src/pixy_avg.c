@@ -85,7 +85,7 @@ PIXY_AVG pixyAvg;
 // *****************************************************************************
 // *****************************************************************************
 
-/* TODO:  Add any necessary callback funtions.
+/* TODO:  Add any necessary callback functions.
 */
 
 // *****************************************************************************
@@ -100,14 +100,19 @@ PIXY_AVG pixyAvg;
 void sendObstacleAvg(PIXY_AVG data)
 {
     xQueueSendToBack(pixy_avgData.obstacle_q, &data, portMAX_DELAY);
+    //debugChar(0xC6);
 }
 void sendLeadFrontAvg(PIXY_AVG data)
 {
+    debugChar(0x6C);
     xQueueSendToBack(pixy_avgData.leadFront_q, &data, portMAX_DELAY);
+    debugChar(0x6D);
 }
 void sendFollowerFrontAvg(PIXY_AVG data)
 {
+    debugChar(0x6E);
     xQueueSendToBack(pixy_avgData.followerFront_q, &data, portMAX_DELAY);
+    debugChar(0x6F);
 }
 void sendBorderAvg(PIXY_AVG data)
 {
@@ -129,7 +134,9 @@ PIXY_AVG readLeadFrontAvg()
 {
     PIXY_AVG pixyRead;
     BaseType_t pixyReceived;
+    debugChar(0x6E);
     pixyReceived = xQueueReceive(pixy_avgData.leadFront_q , &pixyRead, portMAX_DELAY);
+    debugChar(0x6F);
     //stopEverything();
     //If not received, stop and turn on LED.
     if(pixyReceived == pdFALSE)
@@ -142,7 +149,9 @@ PIXY_AVG readFollowerFrontAvg()
 {
     PIXY_AVG pixyRead;
     BaseType_t pixyReceived;
+    debugChar(0x7E);
     pixyReceived = xQueueReceive(pixy_avgData.followerFront_q , &pixyRead, portMAX_DELAY);
+    debugChar(0x7F);
     //stopEverything();
     //If not received, stop and turn on LED.
     if(pixyReceived == pdFALSE)
@@ -164,12 +173,12 @@ PIXY_AVG readBorderAvg()
     }
     return pixyRead;
 }
-
+/*
 void borderAvg()
 {
         PIXY_DATA pixyData;
         debugChar(0xE1);
-        while(objectsFound != 5) 
+        while(objects != 5) 
         {
             pixyData = readBorderData();
             //debugChar(0xE2);
@@ -181,39 +190,39 @@ void borderAvg()
             ytemp = (pixyData.ycenter1 << 8) | pixyData.ycenter2;   
             widthtemp = (pixyData.width1 << 8) | pixyData.width2;   
             heighttemp = (pixyData.height1 << 8) | pixyData.height2;   
-            if(objectsFound == 0)
+            if(objects == 0)
             {
                 xcoord1 = xtemp;   
                 ycoord1 = ytemp;
                 width1 = widthtemp;
                 height1 = heighttemp;
-                objectsFound++;                          
+                objects++;                          
             }
-            else if(objectsFound == 1 )
+            else if(objects == 1 )
             {
                 xcoord2 = xtemp;   
                 ycoord2 = ytemp;
                 width2 = widthtemp;
                 height2 = heighttemp;
-                objectsFound++;
+                objects++;
             }
-            else if(objectsFound == 2 )
+            else if(objects == 2 )
             {
                 xcoord3 = xtemp;   
                 ycoord3 = ytemp;
                 width3 = widthtemp;
                 height3 = heighttemp;
-                objectsFound++;
+                objects++;
             }
-            else if(objectsFound == 3 )
+            else if(objects == 3 )
             {
                 xcoord4 = xtemp;   
                 ycoord4 = ytemp;
                 width4 = widthtemp;
                 height4 = heighttemp;
-                objectsFound++;
+                objects++;
             }
-            else if(objectsFound == 4 )
+            else if(objects == 4 )
             {   
                 unsigned short xcoordAvg;
                 unsigned short ycoordAvg;
@@ -237,17 +246,19 @@ void borderAvg()
                 pixyAvg.height1 = (heightAvg >> 8);
                 pixyAvg.height2 = heightAvg;
                 sendBorderAvg(pixyAvg);
-                objectsFound++;
+                objects++;
             }
             else {}
         }
-        objectsFound = 0;
+        objects = 0;
 }
+ * */
+/*
 void obstacleAvg()
 {
         PIXY_DATA pixyData;
         debugChar(0xE4);
-        while(objectsFound != 5) 
+        while(objects != 5) 
         {
             pixyData = readObstacleData();
             //debugChar(0xE2);
@@ -259,39 +270,39 @@ void obstacleAvg()
             ytemp = (pixyData.ycenter1 << 8) | pixyData.ycenter2;   
             widthtemp = (pixyData.width1 << 8) | pixyData.width2;   
             heighttemp = (pixyData.height1 << 8) | pixyData.height2;   
-            if(objectsFound == 0)
+            if(objects == 0)
             {
                 xcoord1 = xtemp;   
                 ycoord1 = ytemp;
                 width1 = widthtemp;
                 height1 = heighttemp;
-                objectsFound++;                          
+                objects++;                          
             }
-            else if(objectsFound == 1 )
+            else if(objects == 1 )
             {
                 xcoord2 = xtemp;   
                 ycoord2 = ytemp;
                 width2 = widthtemp;
                 height2 = heighttemp;
-                objectsFound++;
+                objects++;
             }
-            else if(objectsFound == 2 )
+            else if(objects == 2 )
             {
                 xcoord3 = xtemp;   
                 ycoord3 = ytemp;
                 width3 = widthtemp;
                 height3 = heighttemp;
-                objectsFound++;
+                objects++;
             }
-            else if(objectsFound == 3 )
+            else if(objects == 3 )
             {
                 xcoord4 = xtemp;   
                 ycoord4 = ytemp;
                 width4 = widthtemp;
                 height4 = heighttemp;
-                objectsFound++;
+                objects++;
             }
-            else if(objectsFound == 4 )
+            else if(objects == 4 )
             {   
                 unsigned short xcoordAvg;
                 unsigned short ycoordAvg;
@@ -315,220 +326,305 @@ void obstacleAvg()
                 pixyAvg.height1 = (heightAvg >> 8);
                 pixyAvg.height2 = heightAvg;
                 sendObstacleAvg(pixyAvg);
-                objectsFound++;
+                objects++;
             }
             else {}
         }
-        objectsFound = 0;
+        refreshAvg();
+        objects = 0;
 }
+ * */
 void leadFrontAvg()
-{
-        PIXY_DATA pixyData;
-        debugChar(0xF0);
-        while(objectsFound != 5) 
+{ 
+    PIXY_DATA pixyData;
+    while(objects != 5) 
+    {
+        //debugChar(0xF0);
+        //debugChar(objects);
+        pixyData = readLeadFrontData();
+        //debugChar(0xF1);
+        unsigned short xtemp;
+        unsigned short ytemp;
+        unsigned short widthtemp;
+        unsigned short heighttemp;
+        short orienttemp;
+        xtemp = (pixyData.xcenter1 << 8) | pixyData.xcenter2;   
+        ytemp = (pixyData.ycenter1 << 8) | pixyData.ycenter2;   
+        widthtemp = (pixyData.width1 << 8) | pixyData.width2;   
+        heighttemp = (pixyData.height1 << 8) | pixyData.height2;   
+        orienttemp = (pixyData.orient1 << 8) | pixyData.orient2;
+        debugChar(0xEE);
+        debugChar(pixyAvg.orient1);
+        debugChar(pixyAvg.orient2);
+        debugChar(0xEE);
+        if(objects == 0)
         {
-            pixyData = readLeadFrontData();
-            debugChar(0xF1);
-            unsigned short xtemp;
-            unsigned short ytemp;
-            unsigned short widthtemp;
-            unsigned short heighttemp;
-            short orienttemp;
-            xtemp = (pixyData.xcenter1 << 8) | pixyData.xcenter2;   
-            ytemp = (pixyData.ycenter1 << 8) | pixyData.ycenter2;   
-            widthtemp = (pixyData.width1 << 8) | pixyData.width2;   
-            heighttemp = (pixyData.height1 << 8) | pixyData.height2;   
-            orienttemp = (pixyData.orient1 << 8) | pixyData.orient2;
-            if(objectsFound == 0)
-            {
-                debugChar(0xF2);
-                xcoord1 = xtemp;   
-                ycoord1 = ytemp;
-                width1 = widthtemp;
-                height1 = heighttemp;
-                orient1 = orienttemp;
-                objectsFound++;                          
-            }
-            else if(objectsFound == 1 )
-            {
-                debugChar(0xF3);
-                xcoord2 = xtemp;   
-                ycoord2 = ytemp;
-                width2 = widthtemp;
-                height2 = heighttemp;
-                orient2 = orienttemp;
-                objectsFound++;
-            }
-            else if(objectsFound == 2 )
-            {
-                debugChar(0xF4);
-                xcoord3 = xtemp;   
-                ycoord3 = ytemp;
-                width3 = widthtemp;
-                height3 = heighttemp;
-                orient3 = orienttemp;
-                objectsFound++;
-            }
-            else if(objectsFound == 3 )
-            {
-                debugChar(0xF5);
-                xcoord4 = xtemp;   
-                ycoord4 = ytemp;
-                width4 = widthtemp;
-                height4 = heighttemp;
-                orient4 = orienttemp;
-                objectsFound++;
-            }
-            else if(objectsFound == 4 )
-            {   
-                debugChar(0xF6);
-                unsigned short xcoordAvg;
-                unsigned short ycoordAvg;
-                unsigned short heightAvg;
-                unsigned short widthAvg;
-                short orientAvg;
-                signed int negorient1,negorient2,negorient3,negorient4;
-                if(orient1<0)
-                {
-                    negorient1 = 0x10000 - orient1;
-                    negorient1 = 360 - negorient1;
-                }
-                else    
-                    negorient1 = orient1;
-                if(orient2<0)
-                {
-                    negorient2 = 0x10000 - orient2;
-                    negorient2 = 360 - negorient2;
-                }
-                else    
-                    negorient2 = orient2;
-                if(orient3<0)
-                {
-                    negorient3 = 0x10000 - orient3;
-                    negorient3 = 360 - negorient3;
-                }
-                else    
-                    negorient3 = orient3;
-                if(orient4<0)
-                {
-                    negorient4 = 0x10000 - orient4;
-                    negorient4 = 360 - negorient4;             
-                }
-                else    
-                    negorient4 = orient4;
-                xcoordAvg = (xcoord1+xcoord2+xcoord3+xcoord4)/4;
-                ycoordAvg = (ycoord1+ycoord2+ycoord3+ycoord4)/4;
-                heightAvg = (height1+height2+height3+height4)/4;
-                widthAvg  = (width1+width2+width3+width4)/4;
-                orientAvg  = (negorient1+negorient2+negorient3+negorient4)/4;
-                pixyAvg.checksum1 = pixyData.checksum1;
-                pixyAvg.checksum2 = pixyData.checksum2;
-                pixyAvg.sigNum1 = pixyData.sigNum1;
-                pixyAvg.sigNum2 = pixyData.sigNum2;
-                pixyAvg.xcenter1 = (xcoordAvg >> 8);
-                pixyAvg.xcenter2 = xcoordAvg;
-                pixyAvg.ycenter1 = (ycoordAvg >> 8);
-                pixyAvg.ycenter2 = ycoordAvg;
-                pixyAvg.width1 = (widthAvg >> 8);
-                pixyAvg.width2 = widthAvg;
-                pixyAvg.height1 = (heightAvg >> 8);
-                pixyAvg.height2 = heightAvg;
-                pixyAvg.orient1 = (orientAvg >> 8);
-                pixyAvg.orient2 = orientAvg;
-                sendLeadFrontAvg(pixyAvg);
-                objectsFound++;
-            }
-            else {}
+            //debugChar(0xF2);
+            xcoord1 = xtemp;   
+            ycoord1 = ytemp;
+            width1 = widthtemp;
+            height1 = heighttemp;
+            orient1 = orienttemp;                         
         }
-        objectsFound = 0;
+        else if(objects == 1 )
+        {
+            //debugChar(0xF3);
+            xcoord2 = xtemp;   
+            ycoord2 = ytemp;
+            width2 = widthtemp;
+            height2 = heighttemp;
+            orient2 = orienttemp;
+        }
+        else if(objects == 2 )
+        {
+            //debugChar(0xF4);
+            xcoord3 = xtemp;   
+            ycoord3 = ytemp;
+            width3 = widthtemp;
+            height3 = heighttemp;
+            orient3 = orienttemp;
+        }
+        else if(objects == 3 )
+        {
+            //debugChar(0xF5);
+            xcoord4 = xtemp;   
+            ycoord4 = ytemp;
+            width4 = widthtemp;
+            height4 = heighttemp;
+            orient4 = orienttemp;
+        }
+        else if(objects == 4 )
+        {   
+            unsigned short xcoordAvg;
+            unsigned short ycoordAvg;
+            unsigned short heightAvg;
+            unsigned short widthAvg;
+            short orientAvg;
+            signed int negorient1,negorient2,negorient3,negorient4;
+            if(orient1<0)
+            {
+                negorient1 = 0x10000 - orient1;
+                negorient1 = 360 - negorient1;
+            }
+            else    
+                negorient1 = orient1;
+            if(orient2<0)
+            {
+                negorient2 = 0x10000 - orient2;
+                negorient2 = 360 - negorient2;
+            }
+            else    
+                negorient2 = orient2;
+            if(orient3<0)
+            {
+                negorient3 = 0x10000 - orient3;
+                negorient3 = 360 - negorient3;
+            }
+            else    
+                negorient3 = orient3;
+            if(orient4<0)
+            {
+                negorient4 = 0x10000 - orient4;
+                negorient4 = 360 - negorient4;             
+            }
+            else    
+                negorient4 = orient4;
+            xcoordAvg = (xcoord1+xcoord2+xcoord3+xcoord4)/4;
+            ycoordAvg = (ycoord1+ycoord2+ycoord3+ycoord4)/4;
+            heightAvg = (height1+height2+height3+height4)/4;
+            widthAvg  = (width1+width2+width3+width4)/4;
+            if(orientAvg > 360 && negorient1 < 360) 
+                orientAvg = negorient1;
+            else if(orientAvg > 360 && negorient2 < 360) 
+                orientAvg = negorient2;            
+            else if(orientAvg > 360 && negorient3 < 360) 
+                orientAvg = negorient3;
+            else if(orientAvg > 360 && negorient4 < 360) 
+                orientAvg = negorient4;
+            else if(orientAvg < 0 && negorient1 > 0) 
+                orientAvg = negorient2;            
+            else if(orientAvg < 0 && negorient2 > 0) 
+                orientAvg = negorient3;
+            else if(orientAvg < 0 && negorient3 > 0) 
+                orientAvg = negorient4;
+            else if(orientAvg < 0 && negorient4 > 0) 
+                orientAvg = negorient4;
+            else 
+                orientAvg  = (negorient1+negorient2+negorient3+negorient4)/4;
+            pixyAvg.checksum1 = pixyData.checksum1;
+            pixyAvg.checksum2 = pixyData.checksum2;
+            pixyAvg.sigNum1 = pixyData.sigNum1;
+            pixyAvg.sigNum2 = pixyData.sigNum2;
+            pixyAvg.xcenter1 = (xcoordAvg >> 8);
+            pixyAvg.xcenter2 = xcoordAvg;
+            pixyAvg.ycenter1 = (ycoordAvg >> 8);
+            pixyAvg.ycenter2 = ycoordAvg;
+            pixyAvg.width1 = (widthAvg >> 8);
+            pixyAvg.width2 = widthAvg;
+            pixyAvg.height1 = (heightAvg >> 8);
+            pixyAvg.height2 = heightAvg;
+            pixyAvg.orient1 = (orientAvg >> 8);
+            pixyAvg.orient2 = orientAvg;
+            debugChar(0xDD);
+            debugChar(pixyAvg.orient1);
+            debugChar(pixyAvg.orient2);
+            debugChar(0xFF);
+            sendLeadFrontAvg(pixyAvg);
+        }
+        else {}
+        objects++;
+    }
+    if(objects == 5)
+    {
+        refreshAvg();
+        objects = 0;
+    }
 }
 void followerFrontAvg()
 {
-        PIXY_DATA pixyData;
-        debugChar(0xE2);
-        while(objectsFound != 5) 
+    PIXY_DATA pixyData;
+    while(objects != 5) 
+    {
+        //debugChar(0xF0);
+        //debugChar(objects);
+        pixyData = readFollowerFrontData();
+        //debugChar(0xF1);
+        unsigned short xtemp;
+        unsigned short ytemp;
+        unsigned short widthtemp;
+        unsigned short heighttemp;
+        short orienttemp;
+        xtemp = (pixyData.xcenter1 << 8) | pixyData.xcenter2;   
+        ytemp = (pixyData.ycenter1 << 8) | pixyData.ycenter2;   
+        widthtemp = (pixyData.width1 << 8) | pixyData.width2;   
+        heighttemp = (pixyData.height1 << 8) | pixyData.height2;   
+        orienttemp = (pixyData.orient1 << 8) | pixyData.orient2;
+        debugChar(0xEE);
+        debugChar(pixyAvg.orient1);
+        debugChar(pixyAvg.orient2);
+        debugChar(0xEE);
+        if(objects == 0)
         {
-            pixyData = readFollowerFrontData();
-            //debugChar(0xE2);
-            unsigned short xtemp;
-            unsigned short ytemp;
-            unsigned short widthtemp;
-            unsigned short heighttemp;
-            short orienttemp;
-            xtemp = (pixyData.xcenter1 << 8) | pixyData.xcenter2;   
-            ytemp = (pixyData.ycenter1 << 8) | pixyData.ycenter2;   
-            widthtemp = (pixyData.width1 << 8) | pixyData.width2;   
-            heighttemp = (pixyData.height1 << 8) | pixyData.height2;   
-            orienttemp = (pixyData.orient1 << 8) | pixyData.orient2;
-            if(objectsFound == 0)
-            {
-                xcoord1 = xtemp;   
-                ycoord1 = ytemp;
-                width1 = widthtemp;
-                height1 = heighttemp;
-                orient1 = orienttemp;
-                objectsFound++;                          
-            }
-            else if(objectsFound == 1 )
-            {
-                xcoord2 = xtemp;   
-                ycoord2 = ytemp;
-                width2 = widthtemp;
-                height2 = heighttemp;
-                orient2 = orienttemp;
-                objectsFound++;
-            }
-            else if(objectsFound == 2 )
-            {
-                xcoord3 = xtemp;   
-                ycoord3 = ytemp;
-                width3 = widthtemp;
-                height3 = heighttemp;
-                orient3 = orienttemp;
-                objectsFound++;
-            }
-            else if(objectsFound == 3 )
-            {
-                xcoord4 = xtemp;   
-                ycoord4 = ytemp;
-                width4 = widthtemp;
-                height4 = heighttemp;
-                orient4 = orienttemp;
-                objectsFound++;
-            }
-            else if(objectsFound == 4 )
-            {   
-                unsigned short xcoordAvg;
-                unsigned short ycoordAvg;
-                unsigned short heightAvg;
-                unsigned short widthAvg;
-                short orientAvg;
-                
-                xcoordAvg = (xcoord1+xcoord2+xcoord3+xcoord4)/4;
-                ycoordAvg = (ycoord1+ycoord2+ycoord3+ycoord4)/4;
-                heightAvg = (height1+height2+height3+height4)/4;
-                widthAvg  = (width1+width2+width3+width4)/4;
-                orientAvg  = (orient1+orient2+orient3+orient4)/4;
-                pixyAvg.checksum1 = pixyData.checksum1;
-                pixyAvg.checksum2 = pixyData.checksum2;
-                pixyAvg.sigNum1 = pixyData.sigNum1;
-                pixyAvg.sigNum2 = pixyData.sigNum2;
-                pixyAvg.xcenter1 = (xcoordAvg >> 8);
-                pixyAvg.xcenter2 = xcoordAvg;
-                pixyAvg.ycenter1 = (ycoordAvg >> 8);
-                pixyAvg.ycenter2 = ycoordAvg;
-                pixyAvg.width1 = (widthAvg >> 8);
-                pixyAvg.width2 = widthAvg;
-                pixyAvg.height1 = (heightAvg >> 8);
-                pixyAvg.height2 = heightAvg;
-                pixyAvg.orient1 = (orientAvg >> 8);
-                pixyAvg.orient2 = orientAvg;
-                sendFollowerFrontAvg(pixyAvg);
-                objectsFound++;
-            }
-            else {}
+            //debugChar(0xF2);
+            xcoord1 = xtemp;   
+            ycoord1 = ytemp;
+            width1 = widthtemp;
+            height1 = heighttemp;
+            orient1 = orienttemp;                         
         }
-        objectsFound = 0;
+        else if(objects == 1 )
+        {
+            //debugChar(0xF3);
+            xcoord2 = xtemp;   
+            ycoord2 = ytemp;
+            width2 = widthtemp;
+            height2 = heighttemp;
+            orient2 = orienttemp;
+        }
+        else if(objects == 2 )
+        {
+            //debugChar(0xF4);
+            xcoord3 = xtemp;   
+            ycoord3 = ytemp;
+            width3 = widthtemp;
+            height3 = heighttemp;
+            orient3 = orienttemp;
+        }
+        else if(objects == 3 )
+        {
+            //debugChar(0xF5);
+            xcoord4 = xtemp;   
+            ycoord4 = ytemp;
+            width4 = widthtemp;
+            height4 = heighttemp;
+            orient4 = orienttemp;
+        }
+        else if(objects == 4 )
+        {   
+            unsigned short xcoordAvg;
+            unsigned short ycoordAvg;
+            unsigned short heightAvg;
+            unsigned short widthAvg;
+            short orientAvg;
+            signed int negorient1,negorient2,negorient3,negorient4;
+            if(orient1<0)
+            {
+                negorient1 = 0x10000 - orient1;
+                negorient1 = 360 - negorient1;
+            }
+            else    
+                negorient1 = orient1;
+            if(orient2<0)
+            {
+                negorient2 = 0x10000 - orient2;
+                negorient2 = 360 - negorient2;
+            }
+            else    
+                negorient2 = orient2;
+            if(orient3<0)
+            {
+                negorient3 = 0x10000 - orient3;
+                negorient3 = 360 - negorient3;
+            }
+            else    
+                negorient3 = orient3;
+            if(orient4<0)
+            {
+                negorient4 = 0x10000 - orient4;
+                negorient4 = 360 - negorient4;             
+            }
+            else    
+                negorient4 = orient4;
+            xcoordAvg = (xcoord1+xcoord2+xcoord3+xcoord4)/4;
+            ycoordAvg = (ycoord1+ycoord2+ycoord3+ycoord4)/4;
+            heightAvg = (height1+height2+height3+height4)/4;
+            widthAvg  = (width1+width2+width3+width4)/4;
+            if(orientAvg > 360 && negorient1 < 360) 
+                orientAvg = negorient1;
+            else if(orientAvg > 360 && negorient2 < 360) 
+                orientAvg = negorient2;            
+            else if(orientAvg > 360 && negorient3 < 360) 
+                orientAvg = negorient3;
+            else if(orientAvg > 360 && negorient4 < 360) 
+                orientAvg = negorient4;
+            else if(orientAvg < 0 && negorient1 > 0) 
+                orientAvg = negorient2;            
+            else if(orientAvg < 0 && negorient2 > 0) 
+                orientAvg = negorient3;
+            else if(orientAvg < 0 && negorient3 > 0) 
+                orientAvg = negorient4;
+            else if(orientAvg < 0 && negorient4 > 0) 
+                orientAvg = negorient4;
+            else 
+                orientAvg  = (negorient1+negorient2+negorient3+negorient4)/4;
+            pixyAvg.checksum1 = pixyData.checksum1;
+            pixyAvg.checksum2 = pixyData.checksum2;
+            pixyAvg.sigNum1 = pixyData.sigNum1;
+            pixyAvg.sigNum2 = pixyData.sigNum2;
+            pixyAvg.xcenter1 = (xcoordAvg >> 8);
+            pixyAvg.xcenter2 = xcoordAvg;
+            pixyAvg.ycenter1 = (ycoordAvg >> 8);
+            pixyAvg.ycenter2 = ycoordAvg;
+            pixyAvg.width1 = (widthAvg >> 8);
+            pixyAvg.width2 = widthAvg;
+            pixyAvg.height1 = (heightAvg >> 8);
+            pixyAvg.height2 = heightAvg;
+            pixyAvg.orient1 = (orientAvg >> 8);
+            pixyAvg.orient2 = orientAvg;
+            debugChar(0xDD);
+            debugChar(pixyAvg.orient1);
+            debugChar(pixyAvg.orient2);
+            debugChar(0xFF);
+            sendFollowerFrontAvg(pixyAvg);
+        }
+        else {}
+        objects++;
+    }
+    if(objects == 5)
+    {
+        refreshAvg();
+        objects = 0;
+    }
 }
 
 void refreshAvg()
@@ -571,7 +667,7 @@ void refreshAvg()
 void PIXY_AVG_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
-    pixy_avgData.state = PIXY_AVG_STATE_CALC;
+    pixy_avgData.state = PIXY_AVG_STATE_INIT;
     
     /* TODO: Initialize your application's state machine and other
      * parameters.
@@ -611,8 +707,7 @@ void PIXY_AVG_Initialize ( void )
     pixyAvg.height2 = 0;
     pixyAvg.orient1 = 0;
     pixyAvg.orient2 = 0;
-    
-    objectsFound = 0;
+    pixy_avgData.state = PIXY_AVG_STATE_LEAD;
 }
 
 
@@ -634,12 +729,20 @@ void PIXY_AVG_Tasks ( void )
         {
             break;
         }
-        case PIXY_AVG_STATE_CALC:
+        case PIXY_AVG_STATE_LEAD:
         {
             //borderAvg();
-            obstacleAvg();
-            //leadFrontAvg();
-            //followerFrontAvg();
+            //obstacleAvg();
+            leadFrontAvg();
+            debugChar(0x2E);
+            pixy_avgData.state = PIXY_AVG_STATE_FOLLOWER;
+            break;
+        }
+        case PIXY_AVG_STATE_FOLLOWER:
+        {
+            followerFrontAvg();
+            debugChar(0x2);
+            pixy_avgData.state = PIXY_AVG_STATE_LEAD;
             break;
         }
         /* TODO: implement your application state machine.*/
