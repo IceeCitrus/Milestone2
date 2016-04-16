@@ -121,9 +121,6 @@ typedef struct
     unsigned short xcorner, ycorner, heightcorner, widthcorner;
     unsigned short xcoord1, xcoord2, xcoord3, xcoord4, width1, width2, width3, width4;
     unsigned short ycoord1, ycoord2, ycoord3, ycoord4, height1, height2, height3, height4;
-    unsigned short xlead, xfollower, widthlead, widthfollower;
-    unsigned short ylead, yfollower, heightlead, heightfollower;
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Routines
@@ -171,14 +168,6 @@ typedef struct
 */
 
 void PIXY_CALC_Initialize ( void );
-
-void refreshCoord();
-void refreshLead();
-void refreshFollower();
-int coordinates(unsigned short x, unsigned short y, unsigned short xtemp, 
-        unsigned short ytemp, unsigned short width, unsigned short height,
-        unsigned short widthtemp, unsigned short heighttemp);
-int orientation(short orient);
 /*******************************************************************************
   Function:
     void PIXY_CALC_Tasks ( void )
@@ -208,9 +197,15 @@ int orientation(short orient);
   Remarks:
     This routine must be called from SYS_Tasks() routine.
  */
+int coordinates(unsigned short x, unsigned short y, unsigned short xtemp, 
+        unsigned short ytemp, unsigned short width, unsigned short height,
+        unsigned short widthtemp, unsigned short heighttemp);
 
+// Function that will correct the distorted image by taking in the x and y
+unsigned char distortx(unsigned char x, unsigned char y);
+unsigned char distorty(unsigned char x,unsigned char y);
 void PIXY_CALC_Tasks( void );
-
+void refreshCoord();
 
 #endif /* _PIXY_CALC_H */
 

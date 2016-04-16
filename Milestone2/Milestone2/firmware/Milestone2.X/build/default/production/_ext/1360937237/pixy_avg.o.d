@@ -158,4 +158,5 @@ build/default/production/_ext/1360937237/pixy_avg.o:  \
 ../src/pixy_calc.h  \
 ../src/pixy_avg.h  \
  ../src/app_public.h  \
-../src/pixy_avg_public.h 
+../src/pixy_avg_public.h  \
+../src/pixy_calc_public.h 

@@ -29,11 +29,14 @@ extern "C" {
         char orient1;
         char orient2;
     } PIXY_AVG;
-
+    unsigned char startLead;
+    unsigned char startFollower;
     void sendObstacleAvg(PIXY_AVG);
     void sendLeadFrontAvg(PIXY_AVG);
     void sendFollowerFrontAvg(PIXY_AVG);
     void sendBorderAvg(PIXY_AVG);
+    void sendLeadTimer(PIXY_AVG);
+    PIXY_AVG readLeadTimer();
     PIXY_AVG readObstacleAvg();
     PIXY_AVG readLeadFrontAvg();
     PIXY_AVG readFollowerFrontAvg();

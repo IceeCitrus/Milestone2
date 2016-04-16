@@ -95,6 +95,7 @@ MESSAGE_FORMAT msg_Format;
 // *****************************************************************************
 void sendMsgToWIFLY(unsigned char message[], int num)
 {
+    debugChar(0x87);
     if(message[0] == 0x81 && num == 10)
     {
         if(message[2] == 0x0A)

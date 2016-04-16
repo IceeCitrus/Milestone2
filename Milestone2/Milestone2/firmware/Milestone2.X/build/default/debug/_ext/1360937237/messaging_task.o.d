@@ -1,7 +1,7 @@
-build/default/production/_ext/1360937237/pixy_calc.o:  \
-../src/pixy_calc.c  \
- ../src/pixy_calc.h  \
-../src/system_config/default/system_config.h  \
+build/default/debug/_ext/1360937237/messaging_task.o:  \
+ ../src/messaging_task.c  \
+../src/messaging_task.h  \
+ ../src/system_config/default/system_config.h  \
  ../src/system_config/default/system_definitions.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/common/sys_common.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/common/sys_module.h  \
@@ -159,4 +159,4 @@ build/default/production/_ext/1360937237/pixy_calc.o:  \
 ../src/pixy_avg.h  \
  ../src/app_public.h  \
 ../src/pixy_avg_public.h  \
-../src/pixy_calc_public.h 
+ ../src/messaging_task_public.h 

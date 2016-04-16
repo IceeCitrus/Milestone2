@@ -1,7 +1,6 @@
-build/default/production/_ext/1360937237/pixy_calc.o:  \
-../src/pixy_calc.c  \
- ../src/pixy_calc.h  \
-../src/system_config/default/system_config.h  \
+build/default/debug/_ext/639803181/sys_clk_static.o:  \
+ ../src/system_config/default/framework/system/clk/src/sys_clk_static.c  \
+ ../src/system_config/default/system_config.h  \
  ../src/system_config/default/system_definitions.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/common/sys_common.h  \
  ../../../../../../../../../microchip/harmony/v1_06_02/framework/system/common/sys_module.h  \
@@ -158,5 +157,4 @@ build/default/production/_ext/1360937237/pixy_calc.o:  \
 ../src/pixy_calc.h  \
 ../src/pixy_avg.h  \
  ../src/app_public.h  \
-../src/pixy_avg_public.h  \
-../src/pixy_calc_public.h 
+../src/pixy_avg_public.h 

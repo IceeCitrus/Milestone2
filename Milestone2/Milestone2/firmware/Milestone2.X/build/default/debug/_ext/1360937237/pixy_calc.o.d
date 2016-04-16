@@ -1,4 +1,4 @@
-build/default/production/_ext/1360937237/pixy_calc.o:  \
+build/default/debug/_ext/1360937237/pixy_calc.o:  \
 ../src/pixy_calc.c  \
  ../src/pixy_calc.h  \
 ../src/system_config/default/system_config.h  \

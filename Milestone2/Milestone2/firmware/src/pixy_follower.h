@@ -1,14 +1,56 @@
-/* 
- * File:   messaging.h
- * Author: Andrew Wang
- *
- * Created on February 10, 2016, 5:05 PM
- */
+/*******************************************************************************
+  MPLAB Harmony Application Header File
 
-#ifndef MESSAGING_H
-#define	MESSAGING_H
+  Company:
+    Microchip Technology Inc.
 
-#define TEST_DROP_MESSAGE
+  File Name:
+    pixy_follower.h
+
+  Summary:
+    This header file provides prototypes and definitions for the application.
+
+  Description:
+    This header file provides function prototypes and data type definitions for
+    the application.  Some of these are required by the system (such as the
+    "APP_Initialize" and "APP_Tasks" prototypes) and some of them are only used
+    internally by the application (such as the "APP_STATES" definition).  Both
+    are defined here for convenience.
+*******************************************************************************/
+
+//DOM-IGNORE-BEGIN
+/*******************************************************************************
+Copyright (c) 2013-2014 released Microchip Technology Inc.  All rights reserved.
+
+Microchip licenses to you the right to use, modify, copy and distribute
+Software only when embedded on a Microchip microcontroller or digital signal
+controller that is integrated into your product or third party product
+(pursuant to the sublicense terms in the accompanying license agreement).
+
+You should refer to the license agreement accompanying this Software for
+additional information regarding your rights and obligations.
+
+SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
+MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
+IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
+CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
+OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
+INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
+CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
+SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
+(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
+ *******************************************************************************/
+//DOM-IGNORE-END
+
+#ifndef _PIXY_FOLLOWER_H
+#define _PIXY_FOLLOWER_H
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Included Files
+// *****************************************************************************
+// *****************************************************************************
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -16,10 +58,6 @@
 #include <stdlib.h>
 #include "system_config.h"
 #include "system_definitions.h"
-
-#include "timers.h"
-#include "queue.h"
-#include "debugging_task_public.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -49,42 +87,12 @@ extern "C" {
 typedef enum
 {
 	/* Application's state machine's initial state. */
-	MESSAGING_TASK_STATE_INIT = 0,
+	PIXY_FOLLOWER_STATE_INIT=0,
 
 	/* TODO: Define states used by the application state machine. */
-    MESSAGING_TASK_STATE_RUN = 1,
 
-    MESSAGING_TASK_STATE_READ = 2,
-} MESSAGING_TASK_STATES;
+} PIXY_FOLLOWER_STATES;
 
-char isQueueEmpty();
-unsigned char messageQ();
-/*******************************************************************************
-  Function:
-    void vTimerCallback( TimerHandle_t pxTimer )
-
-  Summary:
- Callback routine for the local timer
-
-  Description:
-    This function is called whenever the timer rolls over. This happens
- once per 50ms. It then sends a time value to the local queue.
-
-  Precondition:
- The timer should be setup to call this routine.
-
-  Parameters:
-    None.
-
-  Returns:
-    None.
-
-  Example:      
- None.
-
-  Remarks:
-    This routine must be called from the timer.
-*/
 
 // *****************************************************************************
 /* Application Data
@@ -102,36 +110,14 @@ unsigned char messageQ();
 typedef struct
 {
     /* The application's current state */
-    MESSAGING_TASK_STATES state;
-    unsigned int msgCountA;
-    unsigned int msgCountB;
-    unsigned int msgCountC;
-    unsigned int msgCountD;
-    unsigned int msgCountE;
+    PIXY_FOLLOWER_STATES state;
+
     /* TODO: Define any additional data used by the application. */
-    QueueHandle_t sendMsg_q;
-    QueueHandle_t receiveMsg_q;
-} MESSAGING_TASK_DATA;
-/*
-typedef struct
-{
-    int count;
-    int validHeader;
-    int validFooter;
-    unsigned char header;
-    unsigned char dst;
-    unsigned char type;
-    unsigned char msgNum1;
-    unsigned char msgNum2;
-    unsigned char data1;
-    unsigned char data2;
-    unsigned char data3;
-    unsigned char data4;
-    unsigned char footer;
-    unsigned char valid;
-    int numInvalid;
-} MESSAGE_FORMAT;
-*/
+
+
+} PIXY_FOLLOWER_DATA;
+
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Routines
@@ -149,7 +135,7 @@ typedef struct
 
 /*******************************************************************************
   Function:
-    void MESSAGING_TASK_Initialize ( void )
+    void PIXY_FOLLOWER_Initialize ( void )
 
   Summary:
      MPLAB Harmony application initialization routine.
@@ -171,19 +157,19 @@ typedef struct
 
   Example:
     <code>
-    MESSAGING_TASK_Initialize();
+    PIXY_FOLLOWER_Initialize();
     </code>
 
   Remarks:
     This routine must be called from the SYS_Initialize function.
 */
 
-void MESSAGING_TASK_Initialize ( void );
+void PIXY_FOLLOWER_Initialize ( void );
 
 
 /*******************************************************************************
   Function:
-    void MESSAGING_TASK_Tasks ( void )
+    void PIXY_FOLLOWER_Tasks ( void )
 
   Summary:
     MPLAB Harmony Demo application tasks function
@@ -204,14 +190,25 @@ void MESSAGING_TASK_Initialize ( void );
 
   Example:
     <code>
-    MESSAGING_TASK_Tasks();
+    PIXY_FOLLOWER_Tasks();
     </code>
 
   Remarks:
     This routine must be called from SYS_Tasks() routine.
  */
 
-void MESSAGING_TASK_Tasks( void );
+void PIXY_FOLLOWER_Tasks( void );
 
-#endif	/* MESSAGING_H */
+
+#endif /* _PIXY_FOLLOWER_H */
+
+//DOM-IGNORE-BEGIN
+#ifdef __cplusplus
+}
+#endif
+//DOM-IGNORE-END
+
+/*******************************************************************************
+ End of File
+ */
 

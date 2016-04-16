@@ -115,7 +115,7 @@ void DRV_USART0_WriteByte(const uint8_t byte)
 void DRV_USART1_Initialize(void)
 {
     /* Initialize USART */
-    PLIB_USART_BaudRateSet(USART_ID_2, SYS_CLK_PeripheralFrequencyGet(CLK_BUS_PERIPHERAL_1), 38400);
+    PLIB_USART_BaudRateSet(USART_ID_2, SYS_CLK_PeripheralFrequencyGet(CLK_BUS_PERIPHERAL_1), 115200);
     PLIB_USART_HandshakeModeSelect(USART_ID_2, USART_HANDSHAKE_MODE_FLOW_CONTROL);
     PLIB_USART_OperationModeSelect(USART_ID_2, USART_ENABLE_TX_RX_USED);
     PLIB_USART_LineControlModeSelect(USART_ID_2, USART_8N1);

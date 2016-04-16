@@ -58,16 +58,6 @@ unsigned int ticks = 0;
   @Remarks
  None.
  */
-void vTimerCallback( TimerHandle_t pxTimer ) {
-    ticks++;
-    //debugChar(ticks);
-    //Send the number of ms elapsed. One tick is 50ms.
-    SendTimerValToMsgQ(ticks * 50);
-}
-
-void pixyCallBack(TimerHandle_t pxTimer) {
-}
-
 /* *****************************************************************************
  End of File
  */

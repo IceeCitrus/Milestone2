@@ -93,7 +93,9 @@ typedef enum
           
 	/* TODO: Define states used by the application state machine. */
     PIXY_AVG_STATE_LEAD=1,
-    PIXY_AVG_STATE_FOLLOWER=2,
+    PIXY_AVG_STATE_LEAD_READ=2,
+    PIXY_AVG_STATE_FOLLOWER=3,
+    PIXY_AVG_STATE_FOLLOWER_READ=4,
 } PIXY_AVG_STATES;
 
 
@@ -115,12 +117,14 @@ typedef struct
     /* The application's current state */
     PIXY_AVG_STATES state;
 
+    TimerHandle_t lead_timer;
     /* TODO: Define any additional data used by the application. */
     QueueHandle_t pixy_q;
     QueueHandle_t obstacle_q;
     QueueHandle_t leadFront_q;
     QueueHandle_t followerFront_q;
     QueueHandle_t border_q;
+    QueueHandle_t leadTimer_q;
 } PIXY_AVG_DATA;
 
 
@@ -131,7 +135,7 @@ typedef struct
 // *****************************************************************************
 /* These routines are called by drivers when certain events occur.
 */
-
+void vTimerCallback( TimerHandle_t pxTimer );
 	
 // *****************************************************************************
 // *****************************************************************************
@@ -203,11 +207,21 @@ void PIXY_AVG_Initialize ( void );
     This routine must be called from SYS_Tasks() routine.
  */
 int objects;
+int moveNum;
+unsigned char distortx2(unsigned char x, unsigned char y);
+unsigned char distorty2(unsigned char x, unsigned char y);
 unsigned short xcoord1, xcoord2, xcoord3, xcoord4, width1, width2, width3, width4;
 unsigned short ycoord1, ycoord2, ycoord3, ycoord4, height1, height2, height3, height4;
+unsigned short xlead1, xlead2, xfollower1, xfollower2, widthlead, widthfollower;
+unsigned short ylead1, ylead2, yfollower1, yfollower2, heightlead, heightfollower;
+unsigned short olead1, olead2, ofollower1, ofollower2;
 short orient1, orient2, orient3, orient4;
 void refreshAvg();
+void refreshLead();
+void refreshFollower();
 void PIXY_AVG_Tasks( void );
+int orientation(unsigned short orient);
+int orientdiff(unsigned short orient, unsigned short diff);
 
 void obstacleAvg();
 void leadFrontAvg();

@@ -169,7 +169,7 @@
       <Template>
         <Name>drv_usart_static.c</Name>
         <Path>Source Files/app/system_config/default/framework/driver/usart</Path>
-        <Checksum>5823AF86279BEC76BFDBB68439065AB2</Checksum>
+        <Checksum>9C37E75635BAB966A31D438153BEF271</Checksum>
       </Template>
       <Template>
         <Name>debugging_task.h</Name>
