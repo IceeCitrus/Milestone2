@@ -174,87 +174,6 @@ PIXY_AVG readBorderAvg()
     }
     return pixyRead;
 }
-/*
-void obstacleAvg()
-{
-        PIXY_DATA pixyData;
-        debugChar(0xE4);
-        while(objects != 5) 
-        {
-            pixyData = readObstacleData();
-            //debugChar(0xE2);
-            unsigned short xtemp;
-            unsigned short ytemp;
-            unsigned short widthtemp;
-            unsigned short heighttemp;
-            xtemp = (pixyData.xcenter1 << 8) | pixyData.xcenter2;   
-            ytemp = (pixyData.ycenter1 << 8) | pixyData.ycenter2;   
-            widthtemp = (pixyData.width1 << 8) | pixyData.width2;   
-            heighttemp = (pixyData.height1 << 8) | pixyData.height2;   
-            if(objects == 0)
-            {
-                xcoord1 = xtemp;   
-                ycoord1 = ytemp;
-                width1 = widthtemp;
-                height1 = heighttemp;
-                objects++;                          
-            }
-            else if(objects == 1 )
-            {
-                xcoord2 = xtemp;   
-                ycoord2 = ytemp;
-                width2 = widthtemp;
-                height2 = heighttemp;
-                objects++;
-            }
-            else if(objects == 2 )
-            {
-                xcoord3 = xtemp;   
-                ycoord3 = ytemp;
-                width3 = widthtemp;
-                height3 = heighttemp;
-                objects++;
-            }
-            else if(objects == 3 )
-            {
-                xcoord4 = xtemp;   
-                ycoord4 = ytemp;
-                width4 = widthtemp;
-                height4 = heighttemp;
-                objects++;
-            }
-            else if(objects == 4 )
-            {   
-                unsigned short xcoordAvg;
-                unsigned short ycoordAvg;
-                unsigned short heightAvg;
-                unsigned short widthAvg;
-                
-                xcoordAvg = (xcoord1+xcoord2+xcoord3+xcoord4)/4;
-                ycoordAvg = (ycoord1+ycoord2+ycoord3+ycoord4)/4;
-                heightAvg = (height1+height2+height3+height4)/4;
-                widthAvg  = (width1+width2+width3+width4)/4;
-                pixyAvg.checksum1 = pixyData.checksum1;
-                pixyAvg.checksum2 = pixyData.checksum2;
-                pixyAvg.sigNum1 = pixyData.sigNum1;
-                pixyAvg.sigNum2 = pixyData.sigNum2;
-                pixyAvg.xcenter1 = (xcoordAvg >> 8);
-                pixyAvg.xcenter2 = xcoordAvg;
-                pixyAvg.ycenter1 = (ycoordAvg >> 8);
-                pixyAvg.ycenter2 = ycoordAvg;
-                pixyAvg.width1 = (widthAvg >> 8);
-                pixyAvg.width2 = widthAvg;
-                pixyAvg.height1 = (heightAvg >> 8);
-                pixyAvg.height2 = heightAvg;
-                sendObstacleAvg(pixyAvg);
-                objects++;
-            }
-            else {}
-        }
-        refreshAvg();
-        objects = 0;
-}
- * */
 void leadFrontAvg()
 { 
     PIXY_DATA pixyTemp;
@@ -749,6 +668,18 @@ unsigned char distorty2(unsigned char x,unsigned char y)
 
     return y;
 }
+
+short pixy_Time(unsigned short millisecondsElapsed)
+{
+    BaseType_t err_code;
+    err_code = xQueueSendToBack( pixy_avgData.timer_q, &millisecondsElapsed,
+                                   portMAX_DELAY );
+    if(err_code == pdTRUE)
+        return 0;
+    else if(err_code == errQUEUE_FULL)
+        return 1;
+}
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -771,6 +702,35 @@ void PIXY_AVG_Initialize ( void )
     /* TODO: Initialize your application's state machine and other
      * parameters.
      */
+    
+    //Create the queue
+    pixy_avgData.timer_q = xQueueCreate(10, sizeof(unsigned int));
+    //Ensure queue was created. If not, do not continue and turn on LED
+    if(pixy_avgData.timer_q == 0)
+    {
+        stopEverything();
+    }
+     //Create the timer
+    pixy_avgData.local_timer = xTimerCreate( "50msTimer",
+                10,
+                pdTRUE,
+                0,
+                vTimerCallback );
+    
+    //Ensure timer was created. If not, do not continue and turn on LED
+    if(pixy_avgData.local_timer == 0)
+    {
+        stopEverything();
+    }
+    BaseType_t started = xTimerStart(pixy_avgData.local_timer, 0);
+    
+    //Ensure the timer started successfully. If not, do not continue and turn
+    // on LED
+    if(started == pdFAIL)
+    {
+        stopEverything();
+    }
+     
     pixy_avgData.obstacle_q = xQueueCreate(100, sizeof(PIXY_AVG));
     if(pixy_avgData.obstacle_q == 0)
     {
@@ -855,6 +815,17 @@ void PIXY_AVG_Tasks ( void )
                 objectsFound = 0;
                 while(objectsFound != 2) 
                 {
+                    //Number of elapsed ms.
+                    unsigned short ms;
+                    BaseType_t received = xQueueReceive(pixy_avgData.timer_q , &ms, portMAX_DELAY);
+                    //If not received, stop and turn on LED.
+                    if(received == pdFALSE)
+                    {
+                        stopEverything();
+                    }
+                    unsigned char ms1,ms2;
+                    ms1 = ms >> 8;
+                    ms2 = ms;
                     leadFrontAvg();
                     pixyData = readLeadFrontAvg();
                     //debugChar(0xA2);
@@ -894,13 +865,9 @@ void PIXY_AVG_Tasks ( void )
                     debugChar(0xA3);
                     debugChar(objectsFound);
                     debugChar(0xA4);
-                    
-//                    unsigned char bufferM[10] = {'G',pixyData.xcenter1,pixyData.xcenter2,
-//                            pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-//                            pixyData.height1,pixyData.height2,0x00};
-//                        sendMsgToWIFLY(bufferM, 10);
-                    
-                    if(objectsFound == 0 && (orientation(orienttemp)==1))
+                
+                    //if(objectsFound == 0 && (orientation(orienttemp)==1))
+                    if(objectsFound == 0)
                     {
                         xlead1 = xtemp;   
                         ylead1 = ytemp;
@@ -911,16 +878,39 @@ void PIXY_AVG_Tasks ( void )
                         debugChar(pixyData.orient1);
                         debugChar(pixyData.orient2);
                         debugChar(0x9A);
-                        unsigned char bufferM[10] = {'E',pixyData.xcenter1,pixyData.xcenter2,
-                            pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                            pixyData.height1,pixyData.height2,0x00};
-                        sendMsgToWIFLY(bufferM, 10);
-                        objectsFound = 1;  
-                        moveNum = 0;
-                        debugChar(0xA5);
-                        debugChar(objectsFound);
-                        debugChar(0xA6);
+                        if(moveNum == 10) {
+                            // Sending Lead Location
+                            /*
+                            unsigned char buffer1[10] = {0x81,'C',0x0B,0x00,
+                                0x00,pixyData.xcenter1,pixyData.xcenter2,pixyData.ycenter1,
+                                pixyData.xcenter2,0x88};
+                            sendMsgToWIFLY(buffer1, 10);
+                            // Sending Lead Orientation
+                            unsigned char buffer2[10] = {0x81,'C',0x0A,0x00,
+                                0x00,0x00,0x00,pixyData.orient1,
+                                pixyData.orient2,0x88};
+                            sendMsgToWIFLY(buffer2, 10);
+                            // Sending Follower Timer
+                            unsigned char buffer3[10] = {0x81,'C',0x10,0x00,
+                                0x00,0x00,0x00,ms1,
+                                ms2,0x88};
+                            sendMsgToWIFLY(buffer3, 10);
+                            */
+                            unsigned char bufferM[10] = {0x81,'E',pixyData.xcenter1,pixyData.xcenter2,
+                                pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
+                                ms1,ms2};
+                            sendMsgToWIFLY(bufferM, 10);
+                            objectsFound = 2;  
+                            moveNum = 0;
+                            debugChar(0xA5);
+                            debugChar(objectsFound);
+                            debugChar(0xA6);
+                        }
+                        else{
+                            moveNum++;
+                        }
                     }
+                    /*
                     else if((objectsFound == 1)&& (orientation(orienttemp)==1)
                             &&(orientdiff(orienttemp, olead1)==1))
                     {
@@ -931,9 +921,9 @@ void PIXY_AVG_Tasks ( void )
                         debugChar(pixyData.orient1);
                         debugChar(pixyData.orient2);
                         debugChar(0x9C);
-                        unsigned char bufferM[10] = {'F',pixyData.xcenter1,pixyData.xcenter2,
+                        unsigned char bufferM[10] = {0x81,'F',pixyData.xcenter1,pixyData.xcenter2,
                             pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                            pixyData.height1,pixyData.height2,0x00};
+                            ms1,ms2};
                         sendMsgToWIFLY(bufferM, 10);
 //                        vTaskDelay(200);
                         objectsFound = 2;
@@ -942,26 +932,81 @@ void PIXY_AVG_Tasks ( void )
                     debugChar(objectsFound);
                     debugChar(0xA8);
                     }
-                    else if((objectsFound==1)&&(orientation(orienttemp)!=1)
-                            ||(orientdiff(orienttemp, olead1)!=1))
+                     */
+                    /*
+                    else if((objectsFound==1))
+                    
+                    //else if((objectsFound==1)&&(orientation(orienttemp)!=1)
+                    //       ||(orientdiff(orienttemp, olead1)!=1))
+                   
                     {
                         debugChar(0x9E);
                         debugChar(pixyData.orient1);
                         debugChar(pixyData.orient2);
                         debugChar(0x9F);
-                        if(moveNum == 5) {
-                            unsigned char bufferM[10] = {'G',pixyData.xcenter1,pixyData.xcenter2,
+                        if(moveNum % 10 == 0) {
+                            unsigned char bufferM[10] = {0x81,'G',pixyData.xcenter1,pixyData.xcenter2,
                                 pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
+                                ms1,ms2};
                             sendMsgToWIFLY(bufferM, 10);
 //                            vTaskDelay(200);
+                            //moveNum = 0;
+                        }
+                        if(moveNum == 100) {
+                            unsigned char bufferL[10] = {0x81,'L',0x23,0x00,0x00,0x00,0x5A,0xAA,0xAA,0x88}; // Turn Left
+                            sendMsgToWIFLY(bufferL, 10);
+                            //moveNum = 0;
+                        }
+                        if(moveNum == 160) {
+                            unsigned char bufferL[10] = {0x81,'L',0x21,0x00,0x00,0x00,0x28,0xAA,0xAA,0x88}; // Forward
+                            sendMsgToWIFLY(bufferL, 10);
+                        }
+                        if(moveNum == 260) {
+                            unsigned char bufferL[10] = {0x81,'L',0x21,0x00,0x00,0x00,0x0F,0xAA,0xAA,0x88}; // Forward
+                            sendMsgToWIFLY(bufferL, 10);
+                            //moveNum = 0;
+                        }
+                        if(moveNum == 310) {
+                            unsigned char bufferL[10] = {0x81,'L',0x23,0x00,0x00,0x00,0x5A,0xAA,0xAA,0x88}; // Turn Left
+                            sendMsgToWIFLY(bufferL, 10);
+                        }
+                        if(moveNum == 370) {
+                            unsigned char bufferL[10] = {0x81,'L',0x21,0x00,0x00,0x00,0x28,0xAA,0xAA,0x88}; // Forward
+                            sendMsgToWIFLY(bufferL, 10);
+                            //moveNum = 0;
+                        }
+                        if(moveNum == 470) {
+                            unsigned char bufferL[10] = {0x81,'L',0x21,0x00,0x00,0x00,0x0F,0xAA,0xAA,0x88}; // Forward
+                            sendMsgToWIFLY(bufferL, 10);
+                            //moveNum = 0;
+                        }
+                        if(moveNum == 530) {
+                            unsigned char bufferL[10] = {0x81,'L',0x23,0x00,0x00,0x00,0x5A,0xAA,0xAA,0x88}; // Turn Left
+                            sendMsgToWIFLY(bufferL, 10);
+                        }
+                        if(moveNum == 590) {
+                            unsigned char bufferL[10] = {0x81,'L',0x21,0x00,0x00,0x00,0x28,0xAA,0xAA,0x88}; // Forward
+                            sendMsgToWIFLY(bufferL, 10);
+                            //moveNum = 0;
+                        }
+                        if(moveNum == 690) {
+                            unsigned char bufferL[10] = {0x81,'L',0x21,0x00,0x00,0x00,0x0F,0xAA,0xAA,0x88}; // Forward
+                            sendMsgToWIFLY(bufferL, 10);
+                            //moveNum = 0;
+                        }
+                        if(moveNum == 750) {
+                            unsigned char bufferL[10] = {0x81,'L',0x23,0x00,0x00,0x00,0x5A,0xAA,0xAA,0x88}; // Turn Left
+                            sendMsgToWIFLY(bufferL, 10);
                             moveNum = 0;
+                            objectsFound = 1;
                         }
-                        else {
+                        //else {
+                            
                             moveNum++;
-                        }
+                        //}
                         debugChar(0x9A);
                     }
+                    */
                     else 
                     {
                         debugChar(0x76);
@@ -975,6 +1020,7 @@ void PIXY_AVG_Tasks ( void )
                     debugChar(0x77);
                     objectsFound = 0;
                 }
+//                pixy_avgData.state = PIXY_AVG_STATE_LEAD;
                 pixy_avgData.state = PIXY_AVG_STATE_FOLLOWER;
             }
             else {
@@ -1007,6 +1053,16 @@ void PIXY_AVG_Tasks ( void )
                 debugChar(0xA4);
                 while(objectsFound != 2) 
                 {
+                    unsigned int ms;
+                    BaseType_t received = xQueueReceive(pixy_avgData.timer_q , &ms, portMAX_DELAY);
+                    //If not received, stop and turn on LED.
+                    if(received == pdFALSE)
+                    {
+                        stopEverything();
+                    }
+                    unsigned char ms1,ms2;
+                    ms1 = ms >> 8;
+                    ms2 = ms;
                     followerFrontAvg();
                     pixyData = readFollowerFrontAvg();
                     //debugChar(0xA2);
@@ -1042,7 +1098,8 @@ void PIXY_AVG_Tasks ( void )
                     debugChar(0xA3);
                     debugChar(objectsFound);
                     debugChar(0xA4);
-                    if(objectsFound == 0 && (orientation(orienttemp)==1))
+                    //if(objectsFound == 0 && (orientation(orienttemp)==1))
+                    if(objectsFound == 0)
                     {
                         xfollower1 = xtemp;   
                         yfollower1 = ytemp;
@@ -1053,16 +1110,40 @@ void PIXY_AVG_Tasks ( void )
                         debugChar(pixyData.orient1);
                         debugChar(pixyData.orient2);
                         debugChar(0x9A);
-                        unsigned char bufferM[10] = {'H',pixyData.xcenter1,pixyData.xcenter2,
+                        if(moveNum == 5) {
+                            // Sending Follower Location
+                            /*
+                            unsigned char buffer1[10] = {0x81,'C',0x0D,0x00,
+                                0x00,pixyData.xcenter1,pixyData.xcenter2,pixyData.ycenter1,
+                                pixyData.xcenter2,0x88};
+                            sendMsgToWIFLY(buffer1, 10);
+                            // Sending Follower Orientation
+                            unsigned char buffer2[10] = {0x81,'C',0x0E,0x00,
+                                0x00,0x00,0x00,pixyData.orient1,
+                                pixyData.orient2,0x88};
+                            sendMsgToWIFLY(buffer2, 10);
+                            // Sending Follower Timer
+                            unsigned char buffer3[10] = {0x81,'C',0x10,0x00,
+                                0x00,0x00,0x00,ms1,
+                                ms2,0x88};
+                            sendMsgToWIFLY(buffer3, 10);
+                            */
+                            unsigned char bufferM[10] = {0x81,'H',pixyData.xcenter1,pixyData.xcenter2,
                             pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                            pixyData.height1,pixyData.height2,0x00};
-                        sendMsgToWIFLY(bufferM, 10);
-                        objectsFound = 1;  
-                        moveNum = 0;
+                            ms1,ms2};
+                            sendMsgToWIFLY(bufferM, 10);
+                            objectsFound = 2;  
+//                            vTaskDelay(200);
+                            moveNum = 0;
+                        }
+                        else{
+                            moveNum++;
+                        }
                         debugChar(0xA5);
                         debugChar(objectsFound);
                         debugChar(0xA6);
                     }
+                    /*
                     else if((objectsFound == 1)&& (orientation(orienttemp)==1)
                             &&(orientdiff(orienttemp, ofollower1)==1))
                     {
@@ -1073,9 +1154,9 @@ void PIXY_AVG_Tasks ( void )
                         debugChar(pixyData.orient1);
                         debugChar(pixyData.orient2);
                         debugChar(0x9C);
-                        unsigned char bufferM[10] = {'I',pixyData.xcenter1,pixyData.xcenter2,
+                        unsigned char bufferM[10] = {0x81,'I',pixyData.xcenter1,pixyData.xcenter2,
                             pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                            pixyData.height1,pixyData.height2,0x00};
+                            ms1,ms2};
                         sendMsgToWIFLY(bufferM, 10);
 //                        vTaskDelay(200);
                         objectsFound = 2;
@@ -1092,9 +1173,9 @@ void PIXY_AVG_Tasks ( void )
                         debugChar(pixyData.orient2);
                         debugChar(0x9E);
                         if(moveNum == 5) {
-                            unsigned char bufferM[10] = {'J',pixyData.xcenter1,pixyData.xcenter2,
+                            unsigned char bufferM[10] = {0x81,'J',pixyData.xcenter1,pixyData.xcenter2,
                                 pixyData.ycenter1,pixyData.ycenter2,pixyData.orient1,pixyData.orient2,
-                                pixyData.height1,pixyData.height2,0x00};
+                                ms1,ms2};
                             sendMsgToWIFLY(bufferM, 10);
 //                            vTaskDelay(200);
                             moveNum = 0;
@@ -1103,6 +1184,7 @@ void PIXY_AVG_Tasks ( void )
                             moveNum++;
                         }
                     }
+                    */
                     else 
                     {
                         debugChar(0x76);
