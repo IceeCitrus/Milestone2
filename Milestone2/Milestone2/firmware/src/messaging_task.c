@@ -100,37 +100,109 @@ void sendMsgToWIFLY(unsigned char message[], int num)
     {
         if(message[2] == 0x0A)
         {
-            msg_taskData.msgCountA++;
-            message[3] = msg_taskData.msgCountA >> 8;
-            message[4] = (unsigned char) msg_taskData.msgCountA;
+            msg_taskData.msgOrientationL++;
+            message[3] = msg_taskData.msgOrientationL >> 8;
+            message[4] = (unsigned char) msg_taskData.msgOrientationL;
         }
         else if(message[2] == 0x0B)
         {
-            msg_taskData.msgCountB++;
-            message[3] = msg_taskData.msgCountB >> 8;
-            message[4] = (unsigned char) msg_taskData.msgCountB;
+            msg_taskData.msgLocationL++;
+            message[3] = msg_taskData.msgLocationL >> 8;
+            message[4] = (unsigned char) msg_taskData.msgLocationL;
         }
         else if(message[2] == 0x0C)
         {
-            msg_taskData.msgCountC++;
-            message[3] = msg_taskData.msgCountC >> 8;
-            message[4] = (unsigned char) msg_taskData.msgCountC;
+            msg_taskData.msgOrientationF++;
+            message[3] = msg_taskData.msgOrientationF >> 8;
+            message[4] = (unsigned char) msg_taskData.msgOrientationF;
         }
         else if(message[2] == 0x0D)
         {
-            msg_taskData.msgCountD++;
-            message[3] = msg_taskData.msgCountD >> 8;
-            message[4] = (unsigned char) msg_taskData.msgCountD;
+            msg_taskData.msgLocationF++;
+            message[3] = msg_taskData.msgLocationF >> 8;
+            message[4] = (unsigned char) msg_taskData.msgLocationF;
         }
         else if(message[2] == 0x0E)
         {
-            msg_taskData.msgCountE++;
+            msg_taskData.msgObstacle++;
+            message[3] = msg_taskData.msgObstacle >> 8;
+            message[4] = (unsigned char) msg_taskData.msgObstacle;
+        }
+        else if(message[2] == 0x0F)
+        {
+            msg_taskData.msgTimeL++;
+            message[3] = msg_taskData.msgTimeL >> 8;
+            message[4] = (unsigned char) msg_taskData.msgTimeL;
+        }
+        else if(message[2] == 0x10)
+        {
+            msg_taskData.msgTimeF++;
+            message[3] = msg_taskData.msgTimeF >> 8;
+            message[4] = (unsigned char) msg_taskData.msgTimeF;
+        }
+        else if(message[2] == 0x15)
+        {
+            msg_taskData.msgStartLocation++;
+            message[3] = msg_taskData.msgStartLocation >> 8;
+            message[4] = (unsigned char) msg_taskData.msgStartLocation;
+        }
+        else if(message[2] == 0x16)
+        {
+            msg_taskData.msgStartOrientation++;
+            message[3] = msg_taskData.msgStartOrientation >> 8;
+            message[4] = (unsigned char) msg_taskData.msgStartOrientation;
+        }
+        else if(message[2] == 0x17)
+        {
+            msg_taskData.msgLocationTemp++;
+            message[3] = msg_taskData.msgLocationTemp >> 8;
+            message[4] = (unsigned char) msg_taskData.msgLocationTemp;
+        }
+        else if(message[2] == 0x18)
+        {
+            msg_taskData.msgOrientationTemp++;
+            message[3] = msg_taskData.msgOrientationTemp >> 8;
+            message[4] = (unsigned char) msg_taskData.msgOrientationTemp;
+        }
+        else if(message[2] == 0x20)
+        {
+            msg_taskData.msgStop++;
+            message[3] = msg_taskData.msgStop >> 8;
+            message[4] = (unsigned char) msg_taskData.msgStop;
+        }
+        else if(message[2] == 0x21)
+        {
+            msg_taskData.msgForward++;
+            message[3] = msg_taskData.msgForward >> 8;
+            message[4] = (unsigned char) msg_taskData.msgForward;
+        }
+        else if(message[2] == 0x22)
+        {
+            msg_taskData.msgBack++;
+            message[3] = msg_taskData.msgBack >> 8;
+            message[4] = (unsigned char) msg_taskData.msgBack;
+        }
+        else if(message[2] == 0x23)
+        {
+            msg_taskData.msgLeft++;
+            message[3] = msg_taskData.msgLeft >> 8;
+            message[4] = (unsigned char) msg_taskData.msgLeft;
+        }
+        else if(message[2] == 0x24)
+        {
+            msg_taskData.msgRight++;
+            message[3] = msg_taskData.msgRight >> 8;
+            message[4] = (unsigned char) msg_taskData.msgRight;
+        }
+        else if(message[2] == 0x14)
+        {
+            msg_taskData.msgError++;
 #ifdef TEST_DROP_MESSAGE
-            if(msg_taskData.msgCountE == 4)
-                msg_taskData.msgCountE++;
+            if(msg_taskData.msgError == 4)
+                msg_taskData.msgError++;
 #endif
-            message[3] = msg_taskData.msgCountE >> 8;
-            message[4] = (unsigned char) msg_taskData.msgCountE;
+            message[3] = msg_taskData.msgError >> 8;
+            message[4] = (unsigned char) msg_taskData.msgError;
         }
     }
     int i;
@@ -206,11 +278,23 @@ void MESSAGING_TASK_Initialize ( void )
     {
         stopEverything();
     }
-    msg_taskData.msgCountA = 0;
-    msg_taskData.msgCountB = 0;
-    msg_taskData.msgCountC = 0;
-    msg_taskData.msgCountD = 0;
-    msg_taskData.msgCountE = 0;
+    msg_taskData.msgError = 0;
+    msg_taskData.msgObstacle = 0;
+    msg_taskData.msgStartLocation = 0 ;
+    msg_taskData.msgStartOrientation = 0 ;
+    msg_taskData.msgLocationTemp = 0 ;
+    msg_taskData.msgOrientationTemp = 0 ;
+    msg_taskData.msgLocationL = 0;
+    msg_taskData.msgLocationF = 0;
+    msg_taskData.msgOrientationL = 0;
+    msg_taskData.msgOrientationF = 0;
+    msg_taskData.msgTimeL = 0;
+    msg_taskData.msgTimeF = 0;
+    msg_taskData.msgForward = 0;
+    msg_taskData.msgRight = 0;
+    msg_taskData.msgLeft = 0;
+    msg_taskData.msgStop = 0;
+    msg_taskData.msgBack = 0;
     msg_Format.count = 0;
     msg_Format.validHeader = 0;
     msg_Format.validFooter = 0;
